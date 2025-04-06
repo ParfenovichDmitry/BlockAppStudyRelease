@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">BlockAppStudy</string>
+    <string name="welcome_title" translatable="false">BlockAppStudy</string>
+    <string name="welcome_subtitle" translatable="false">Created by Dmitry Parfenovich</string>
+
+    <string name="language_marquee" translatable="false">
+    Choose language  Wybierz język  Выбери язык  Wähle Sprache  Choisis une langue</string>
+
+    <string name="language_selected">Language selected: %1$s</string>
+    <string name="language_selection_title" translatable="false">
+    Choose language  Wybierz język  Выбери язык  Wähle Sprache  Choisis une langue</string>
+
+    <string name="requesting_permissions">Requesting permissions...</string>
+    <string name="granted_permissions">Granted: %1$d/3</string>
+    <string name="grant_accesses">Grant accesses</string>
+
+    <string name="enter_password">Enter your password</string>
+    <string name="password_hint">Password</string>
+    <string name="reenter_password">Re-enter password</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="error_empty_fields">Please fill in all fields</string>
+    <string name="error_password_mismatch">Passwords do not match</string>
+    <string name="error_encrypt_password">Password encryption error</string>
+    <string name="checking_permissions">Checking permissions...</string>
+
+    <string name="choose_secret_question">Choose a secret question</string>
+    <string name="select_question">Select a question</string>
+    <string name="answer_hint">Enter the answer</string>
+
+
+</resources>

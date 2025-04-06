@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="enter_password">WPROWADŹ HASŁO</string>
+    <string name="reenter_password">POWTÓRZ HASŁO</string>
+    <string name="password_hint">hasło</string>
+    <string name="save">Zapisz</string>
+    <string name="cancel">Anuluj</string>
+    <string name="error_empty_fields">Wprowadź hasło w oba pola</string>
+    <string name="error_password_length">Hasło musi zawierać 6 znaków</string>
+    <string name="error_password_mismatch">Hasła nie pasują do siebie</string>
+</resources>

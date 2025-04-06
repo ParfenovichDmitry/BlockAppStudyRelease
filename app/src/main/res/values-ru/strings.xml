@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="language_selected">Выбран язык: %1$s</string>
+
+    <string name="requesting_permissions">Запрос разрешений...</string>
+    <string name="granted_permissions">Выдано: %1$d/3</string>
+    <string name="grant_accesses">Разрешить доступы</string>
+
+    <string name="enter_password">Введите пароль</string>
+    <string name="password_hint">Пароль</string>
+    <string name="reenter_password">Повторите пароль</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    <string name="error_empty_fields">Пожалуйста, заполните все поля</string>
+    <string name="error_password_mismatch">Пароли не совпадают</string>
+
+    <string name="error_encrypt_password">Ошибка шифрования пароля</string>
+    <string name="checking_permissions">Проверка разрешений...</string>
+
+    <string name="choose_secret_question">Выберите секретный вопрос</string>
+    <string name="select_question">Выберите вопрос</string>
+    <string name="answer_hint">Введите ответ</string>
+
+
+
+</resources>

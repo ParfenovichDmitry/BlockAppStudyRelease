@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="available_languages">
+        <item>Английский</item>
+        <item>Польский</item>
+        <item>Немецкий</item>
+        <item>Французский</item>
+        <item>Русский</item>
+    </string-array>
+
+    <string-array name="language_codes">
+        <item>en</item>
+        <item>pl</item>
+        <item>de</item>
+        <item>fr</item>
+        <item>ru</item>
+    </string-array>
+
+    <string-array name="secret_questions">
+        <item>Ваше любимое блюдо?</item>
+        <item>Имя вашего первого питомца?</item>
+        <item>Имя лучшего друга детства?</item>
+        <item>Где вы родились?</item>
+        <item>Ваш любимый фильм?</item>
+        <item>Девичья фамилия вашей матери?</item>
+    </string-array>
+
+</resources>

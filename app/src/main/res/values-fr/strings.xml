@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="language_selected">Langue sélectionnée : %1$s</string>
+
+    <string name="requesting_permissions">Demande d'autorisations...</string>
+    <string name="granted_permissions">Accordé : %1$d/3</string>
+    <string name="grant_accesses">Autoriser les accès</string>
+
+    <string name="enter_password">Entrez le mot de passe</string>
+    <string name="password_hint">Mot de passe</string>
+    <string name="reenter_password">Ressaisissez le mot de passe</string>
+    <string name="save">Enregistrer</string>
+    <string name="cancel">Annuler</string>
+    <string name="error_empty_fields">Veuillez remplir tous les champs</string>
+    <string name="error_password_mismatch">Les mots de passe ne correspondent pas</string>
+    <string name="error_encrypt_password">Erreur de chiffrement du mot de passe</string>
+    <string name="checking_permissions">Vérification des autorisations...</string>
+
+    <string name="choose_secret_question">Choisissez une question secrète</string>
+    <string name="select_question">Sélectionnez une question</string>
+    <string name="answer_hint">Entrez la réponse</string>
+
+</resources>
