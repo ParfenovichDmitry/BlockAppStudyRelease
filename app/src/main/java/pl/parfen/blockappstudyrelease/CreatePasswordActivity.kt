@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import pl.parfen.blockappstudyrelease.data.PasswordRepository
+import pl.parfen.blockappstudyrelease.data.repository.PasswordRepository
 import pl.parfen.blockappstudyrelease.security.PasswordEncryptor
 import pl.parfen.blockappstudyrelease.ui.password.CreatePasswordScreen
 
@@ -31,11 +31,13 @@ class CreatePasswordActivity : BaseActivity() {
     private fun savePassword(password: String) {
         lifecycleScope.launch(Dispatchers.IO) {
             try {
+                PasswordEncryptor.createSecretKeyIfNeeded()
+
                 val encryptedPassword = PasswordEncryptor.encrypt(password)
 
                 PasswordRepository.saveEncryptedPassword(
                     this@CreatePasswordActivity,
-                    encryptedPassword
+                    encryptedPassword ?: throw IllegalStateException("Error encrypting password")
                 )
 
                 launch(Dispatchers.Main) {
@@ -54,9 +56,17 @@ class CreatePasswordActivity : BaseActivity() {
         }
     }
 
+
+    private fun showEncryptionError() {
+        Toast.makeText(
+            this,
+            getString(R.string.error_encrypt_password),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
     private fun navigateToCheckQuestion() {
-        val intent = Intent(this, CheckQuestion::class.java)
-        startActivity(intent)
+        startActivity(Intent(this, CheckQuestion::class.java))
         finish()
     }
 }

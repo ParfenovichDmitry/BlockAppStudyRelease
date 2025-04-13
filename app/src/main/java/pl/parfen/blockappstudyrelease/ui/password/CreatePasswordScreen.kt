@@ -40,7 +40,7 @@ fun CreatePasswordScreen(
             .background(Brush.verticalGradient(colors = listOf(GreenLight, GreenMedium)))
             .padding(24.dp)
     ) {
-
+        // Заголовок
         Text(
             text = stringResource(R.string.enter_password),
             style = MaterialTheme.typography.headlineMedium,
@@ -50,18 +50,20 @@ fun CreatePasswordScreen(
                 .padding(bottom = 24.dp)
         )
 
-
+        // Поле ввода пароля
         PasswordTextField(
             value = password,
             onValueChange = { password = it },
             label = stringResource(R.string.password_hint),
             isVisible = passwordVisible,
-            onVisibilityToggle = { passwordVisible = !passwordVisible }
+            onVisibilityToggle = { passwordVisible = !passwordVisible },
+            textColor = ButtonTextColor,
+            labelColor = LabelFocusedColor
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-
+        // Подпись ко второму полю
         Text(
             text = stringResource(R.string.reenter_password),
             style = MaterialTheme.typography.titleMedium,
@@ -69,17 +71,20 @@ fun CreatePasswordScreen(
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
+        // Поле повторного ввода
         PasswordTextField(
             value = reEnteredPassword,
             onValueChange = { reEnteredPassword = it },
             label = stringResource(R.string.password_hint),
             isVisible = reEnteredPasswordVisible,
-            onVisibilityToggle = { reEnteredPasswordVisible = !reEnteredPasswordVisible }
+            onVisibilityToggle = { reEnteredPasswordVisible = !reEnteredPasswordVisible },
+            textColor = ButtonTextColor,
+            labelColor = LabelFocusedColor
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-
+        // Ошибка
         AnimatedVisibility(
             visible = errorMessage != null,
             enter = fadeIn(),
@@ -97,11 +102,12 @@ fun CreatePasswordScreen(
 
         Spacer(modifier = Modifier.height(32.dp))
 
-
+        // Кнопки
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            // Кнопка Сохранить
             CustomImageButton(
                 normalResId = R.drawable.yes_green,
                 pressedResId = R.drawable.yes_press,
@@ -125,6 +131,7 @@ fun CreatePasswordScreen(
                 }
             )
 
+            // Кнопка Отмена
             CustomImageButton(
                 normalResId = R.drawable.no_red,
                 pressedResId = R.drawable.no_pres,
@@ -138,6 +145,7 @@ fun CreatePasswordScreen(
                     password = ""
                     reEnteredPassword = ""
                     errorMessage = null
+                    onCancel()
                 }
             )
         }

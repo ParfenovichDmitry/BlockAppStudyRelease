@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import pl.parfen.blockappstudyrelease.R
-import pl.parfen.blockappstudyrelease.data.PasswordRepository
+import pl.parfen.blockappstudyrelease.data.repository.PasswordRepository
 
 data class CheckQuestionUiState(
     val selectedQuestion: String? = null,

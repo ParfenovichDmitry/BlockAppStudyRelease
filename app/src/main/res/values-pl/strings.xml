@@ -21,4 +21,65 @@
     <string name="select_question">Wybierz pytanie</string>
     <string name="answer_hint">Wpisz odpowiedź</string>
 
+    <string name="login">Zaloguj się</string>
+    <string name="error_password_incorrect">Nieprawidłowe hasło</string>
+
+    <string name="forgot_password">Zapomniałeś hasła?</string>
+
+    <string name="confirm">Potwierdź</string>
+    <string name="error_wrong_answer">Zła odpowiedź</string>
+    <string name="error_no_data">Brak zapisanych danych</string>
+    <string name="reset_password">Zresetuj hasło</string>
+    <string name="your_password">Twoje hasło:</string>
+
+    <string name="profiles">Profile</string>
+    <string name="statistics">Statystyki</string>
+    <string name="options">Opcje</string>
+
+    <string name="profile_list">Lista profili</string>
+    <string name="no_profiles">Brak profili</string>
+
+    <string name="delete_profile_title">Usuń profil</string>
+    <string name="delete_profile_message">Czy na pewno chcesz usunąć profil?</string>
+    <string name="delete">Usuń</string>
+    <string name="avatar">Awatar</string>
+    <string name="no_name">Bez nazwy</string>
+    <string name="profile_age">Wiek: %1$d</string>
+    <string name="edit">Edytuj</string>
+    <string name="back">Powrót</string>
+    <string name="connect_profile">Połącz profil</string>
+    <string name="disconnect_profile">Rozłącz profil</string>
+
+    <string name="nickname_label">Pseudonim</string>
+    <string name="age_label">Wiek</string>
+
+    <string name="choose_avatar">Wybierz awatar</string>
+    <string name="choose_avatar_message">Wybierz źródło obrazu dla swojego awatara</string>
+    <string name="camera_option">Aparat</string>
+    <string name="gallery_option">Galeria</string>
+
+    <string name="blocked_apps_button">Zablokowane aplikacje</string>
+    <string name="age_validation_message">Proszę podać wiek od 6 do 15 lat.</string>
+
+    <string name="usage_time_label">Czas użytkowania (min)</string>
+    <string name="percentage_label">Minimalny procent ukończenia (%)</string>
+    <string name="resource_label">Wybierz zasób</string>
+    <string name="book_label">Książka</string>
+    <string name="ai_label">SI</string>
+    <string name="age_validation_title">Uwaga</string>
+    <string name="inform">Proszę wypełnić dane profilu</string>
+
+    <string name="app_icon_description">Ikona aplikacji %s</string>
+    <string name="select_app_checkbox">Wybierz aplikację %s</string>
+    <string name="select_all">Wybierz wszystko</string>
+    <string name="deselect_all">Odznacz wszystko</string>
+    <string name="selected_apps_title">Wybrane aplikacje</string>
+    <string name="loading_placeholder">Ładowanie...</string>
+
+
+
+
+
+
+
 </resources>

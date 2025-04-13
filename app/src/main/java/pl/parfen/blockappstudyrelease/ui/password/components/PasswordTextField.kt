@@ -7,6 +7,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import pl.parfen.blockappstudyrelease.ui.theme.*
@@ -18,7 +19,9 @@ fun PasswordTextField(
     onValueChange: (String) -> Unit,
     label: String,
     isVisible: Boolean,
-    onVisibilityToggle: () -> Unit
+    onVisibilityToggle: () -> Unit,
+    textColor: Color,
+    labelColor: Color
 ) {
     TextField(
         value = value,
@@ -37,10 +40,10 @@ fun PasswordTextField(
         colors = TextFieldDefaults.colors(
             focusedContainerColor = White,
             unfocusedContainerColor = White,
-            focusedTextColor = ButtonTextColor,
-            unfocusedTextColor = ButtonTextColor,
-            focusedLabelColor = LabelFocusedColor,
-            unfocusedLabelColor = LabelFocusedColor
+            focusedTextColor = textColor,
+            unfocusedTextColor = textColor,
+            focusedLabelColor = labelColor,
+            unfocusedLabelColor = labelColor
         )
     )
 }

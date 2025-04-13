@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="pl.parfen.blockappstudyrelease">
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
     <!-- 👇 ОБЯЗАТЕЛЬНО нужно добавить для отображения в Usage Access -->
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
 
@@ -15,6 +21,9 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -58,6 +67,37 @@
         <activity
             android:name=".CheckQuestion"
             android:exported="true" />
+
+        <activity
+            android:name=".UserOptionsActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".PasswordRecoveryActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ProfilesActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".StatisticsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CreateProfileActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SelectAppsActivity"
+            android:exported="true" />
+
+
+
+        <service
+            android:name=".service.AppMonitoringService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
     </application>
 
 </manifest>

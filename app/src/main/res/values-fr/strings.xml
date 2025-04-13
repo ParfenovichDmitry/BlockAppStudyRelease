@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name" translatable="false">BlockAppStudy</string>
+    <string name="welcome_title" translatable="false">BlockAppStudy</string>
+    <string name="welcome_subtitle" translatable="false">Created by Dmitry Parfenovich</string>
+
+    <string name="language_marquee" translatable="false">
+        Choose language  Wybierz język  Выбери язык  Wähle Sprache  Choisis une langue
+    </string>
 
     <string name="language_selected">Langue sélectionnée : %1$s</string>
+    <string name="language_selection_title" translatable="false">
+        Choose language  Wybierz język  Выбери язык  Wähle Sprache  Choisis une langue
+    </string>
 
-    <string name="requesting_permissions">Demande d'autorisations...</string>
+    <string name="requesting_permissions">Demande d\'autorisations...</string>
     <string name="granted_permissions">Accordé : %1$d/3</string>
-    <string name="grant_accesses">Autoriser les accès</string>
+    <string name="grant_accesses">Accorder des accès</string>
 
-    <string name="enter_password">Entrez le mot de passe</string>
+    <string name="enter_password">Entrez votre mot de passe</string>
     <string name="password_hint">Mot de passe</string>
-    <string name="reenter_password">Ressaisissez le mot de passe</string>
+    <string name="reenter_password">Entrez à nouveau le mot de passe</string>
     <string name="save">Enregistrer</string>
     <string name="cancel">Annuler</string>
     <string name="error_empty_fields">Veuillez remplir tous les champs</string>
@@ -20,5 +30,64 @@
     <string name="choose_secret_question">Choisissez une question secrète</string>
     <string name="select_question">Sélectionnez une question</string>
     <string name="answer_hint">Entrez la réponse</string>
+
+    <string name="login">Connexion</string>
+    <string name="error_password_incorrect">Mot de passe incorrect</string>
+    <string name="forgot_password">Mot de passe oublié ?</string>
+
+    <string name="confirm">Confirmer</string>
+    <string name="error_wrong_answer">Mauvaise réponse</string>
+    <string name="error_no_data">Aucune donnée enregistrée</string>
+    <string name="reset_password">Réinitialiser le mot de passe</string>
+    <string name="your_password">Votre mot de passe:</string>
+
+    <string name="profiles">Profils</string>
+    <string name="statistics">Statistiques</string>
+    <string name="options">Options</string>
+
+    <string name="profile_list">Liste des profils</string>
+    <string name="no_profiles">Aucun profil</string>
+
+    <string name="delete_profile_title">Supprimer le profil</string>
+    <string name="delete_profile_message">Êtes-vous sûr de vouloir supprimer le profil ?</string>
+    <string name="delete">Supprimer</string>
+    <string name="avatar">Avatar</string>
+    <string name="no_name">Sans nom</string>
+    <string name="profile_age">Âge : %1$d</string>
+    <string name="edit">Modifier</string>
+    <string name="back">Retour</string>
+    <string name="connect_profile">Connecter le profil</string>
+    <string name="disconnect_profile">Déconnecter le profil</string>
+
+    <string name="nickname_label">Surnom</string>
+    <string name="age_label">Âge</string>
+
+    <string name="choose_avatar">Choisir un avatar</string>
+    <string name="choose_avatar_message">Sélectionnez une source d\'image pour votre avatar</string>
+    <string name="camera_option">Caméra</string>
+    <string name="gallery_option">Galerie</string>
+
+    <string name="blocked_apps_button">Applications bloquées</string>
+    <string name="age_validation_message">Veuillez saisir un âge entre 6 et 15 ans.</string>
+    <string name="usage_time_label">Temps d\'utilisation (min)</string>
+    <string name="percentage_label">Pourcentage d\'achèvement minimum (%)</string>
+
+    <string name="resource_label">Choisissez une ressource</string>
+    <string name="book_label">Livre</string>
+    <string name="ai_label">IA</string>
+    <string name="age_validation_title">Attention</string>
+    <string name="inform">Veuillez remplir les informations du profil</string>
+
+    <string name="app_icon_description">Icône de l\'application %s</string>
+    <string name="select_app_checkbox">Sélectionner l\'application %s</string>
+    <string name="select_all">Tout sélectionner</string>
+    <string name="deselect_all">Tout désélectionner</string>
+    <string name="selected_apps_title">Applications sélectionnées</string>
+    <string name="loading_placeholder">Chargement...</string>
+
+
+
+
+
 
 </resources>

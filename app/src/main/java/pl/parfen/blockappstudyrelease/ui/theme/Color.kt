@@ -44,3 +44,4 @@ val WelcomeProgressColor = Color(0xFF1976D2)
 
 val ButtonTextColor = Color(0xFF263238)
 val LabelFocusedColor = Color(0xFF388E3C)
+val TitleTextColor = Color(0xFF333333)

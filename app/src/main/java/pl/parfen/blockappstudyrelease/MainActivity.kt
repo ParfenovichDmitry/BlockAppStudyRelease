@@ -11,6 +11,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.delay
+import pl.parfen.blockappstudyrelease.data.repository.PasswordRepository
 
 import pl.parfen.blockappstudyrelease.ui.main.LoadingScreen
 import pl.parfen.blockappstudyrelease.ui.theme.BlockAppStudyReleaseTheme
@@ -98,8 +99,7 @@ class MainActivity : BaseActivity() {
                 PermissionChecker.isMicrophonePermissionGranted(this)
 
     private fun navigateNext() {
-        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val encryptedPassword = prefs.getString(ENCRYPTED_PASSWORD_KEY, null)
+        val encryptedPassword = PasswordRepository.getEncryptedPassword(this)
 
         val nextActivity = if (encryptedPassword.isNullOrEmpty()) {
             CreatePasswordActivity::class.java
@@ -110,4 +110,5 @@ class MainActivity : BaseActivity() {
         startActivity(Intent(this, nextActivity))
         finish()
     }
+
 }
