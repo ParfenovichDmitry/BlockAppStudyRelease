@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import pl.parfen.blockappstudyrelease.data.database.ProfileDao
-import pl.parfen.blockappstudyrelease.data.local.dao.BookProgressDao
+import pl.parfen.blockappstudyrelease.data.database.dao.BookProgressDao
 
 import pl.parfen.blockappstudyrelease.data.local.dao.UsageLogDao
 import pl.parfen.blockappstudyrelease.data.model.BookProgress

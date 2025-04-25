@@ -1,4 +1,4 @@
-package pl.parfen.blockappstudyrelease.data.local.dao
+package pl.parfen.blockappstudyrelease.data.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -32,4 +32,6 @@ interface BookProgressDao {
 
     @Query("DELETE FROM book_progress WHERE id = :id")
     suspend fun deleteById(id: Int)
+    @Query("DELETE FROM book_progress WHERE profile_id = :profileId AND title = :title")
+    fun deleteByProfileIdAndTitle(profileId: Int, title: String)
 }

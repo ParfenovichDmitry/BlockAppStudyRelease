@@ -83,6 +83,24 @@
     <string name="deselect_all">Deselect All</string>
     <string name="selected_apps_title">Selected Apps</string>
     <string name="loading_placeholder">Loading...</string>
+    <string name="show_all_books">Show all books</string>
+    <string name="add_book">Add book</string>
+    <string name="without_additional_language">Without additional language</string>
+    <string name="language_label">Language: %1$s</string>
+    <string name="age_label2">Age: %1$s</string>
+    <string name="progress">Progress: %.2f%%</string>
+    <string name="preview">Preview</string>
+    <string name="confirm_deletion_title">Confirm Deletion</string>
+    <string name="confirm_deletion_message">Are you sure you want to delete the book \'%1$s\'?</string>
+    <string name="error_file_name">Failed to get file name</string>
+    <string name="error_file_format">Unsupported file format: .%1$s</string>
+    <string name="error_open_stream">Failed to open file stream</string>
+    <string name="error_add_book">Failed to add book: %1$s</string>
+    <string name="error_delete_book">Failed to delete book: %1$s</string>
+    <string name="user_author">User</string>
+
+
+
 
 
 

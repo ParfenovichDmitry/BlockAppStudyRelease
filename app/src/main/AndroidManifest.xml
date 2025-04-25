@@ -90,6 +90,12 @@
         <activity
             android:name=".SelectAppsActivity"
             android:exported="true" />
+        <activity
+            android:name=".BookPreviewActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SelectBookActivity"
+            android:exported="true" />
 
 
 

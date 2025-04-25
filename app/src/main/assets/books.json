@@ -1,0 +1,1128 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "title": "Proste teksty",
+      "file": "books/pl/6-7/1.txt",
+      "language": "pl",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 2,
+      "title": "Wiersze Juliana Tuwima",
+      "file": "books/pl/6-7/2.txt",
+      "language": "pl",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 3,
+      "title": "Wiersze Jana Brzechwy",
+      "file": "books/pl/6-7/3.txt",
+      "language": "pl",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 4,
+      "title": "Ignacy Krasicki",
+      "file": "books/pl/6-7/4.txt",
+      "language": "pl",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 5,
+      "title": "Bajki",
+      "file": "books/pl/6-7/5.txt",
+      "language": "pl",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 6,
+      "title": "Akademia pana Kleksa",
+      "file": "books/pl/8-9/6.txt",
+      "language": "pl",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 7,
+      "title": "Alicja w Krainie Czarow",
+      "file": "books/pl/8-9/7.txt",
+      "language": "pl",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 8,
+      "title": "Chłopcy z placu broni",
+      "file": "books/pl/8-9/8.txt",
+      "language": "pl",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 9,
+      "title": "Król Maciuś Pierwszy",
+      "file": "books/pl/8-9/9.txt",
+      "language": "pl",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 10,
+      "title": "Szaleństwa Panny Ewy",
+      "file": "books/pl/8-9/10.txt",
+      "language": "pl",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 11,
+      "title": "Awantura o Basię",
+      "file": "books/pl/10-11/11.txt",
+      "language": "pl",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 12,
+      "title": "Kajtuś Czarodziej",
+      "file": "books/pl/10-11/12.txt",
+      "language": "pl",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 13,
+      "title": "Kiedy znów będę mały",
+      "file": "books/pl/10-11/13.txt",
+      "language": "pl",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 14,
+      "title": "O krasnoludkach i sierotce Marysi",
+      "file": "books/pl/10-11/14.txt",
+      "language": "pl",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 15,
+      "title": "W pustyni i w puszczy",
+      "file": "books/pl/10-11/15.txt",
+      "language": "pl",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 16,
+      "title": "Faraon",
+      "file": "books/pl/12-13/16.txt",
+      "language": "pl",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 17,
+      "title": "Krzyżacy",
+      "file": "books/pl/12-13/17.txt",
+      "language": "pl",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 18,
+      "title": "Lalka",
+      "file": "books/pl/12-13/18.txt",
+      "language": "pl",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 19,
+      "title": "Pan Tadeusz",
+      "file": "books/pl/12-13/19.txt",
+      "language": "pl",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 20,
+      "title": "Syzyfowe prace",
+      "file": "books/pl/12-13/20.txt",
+      "language": "pl",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 21,
+      "title": "Granica",
+      "file": "books/pl/14-15/21.txt",
+      "language": "pl",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 22,
+      "title": "Mały książę",
+      "file": "books/pl/14-15/22.txt",
+      "language": "pl",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 23,
+      "title": "Nad Niemnem",
+      "file": "books/pl/14-15/23.txt",
+      "language": "pl",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 24,
+      "title": "Podróże Guliwera",
+      "file": "books/pl/14-15/24.txt",
+      "language": "pl",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 25,
+      "title": "Potop",
+      "file": "books/pl/14-15/25.txt",
+      "language": "pl",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 26,
+      "title": "The first text",
+      "file": "books/en/6-7/26.txt",
+      "language": "en",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 27,
+      "title": "Don’t Let the Pigeon Drive",
+      "file": "books/en/6-7/27.txt",
+      "language": "en",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 28,
+      "title": "Goodnight moon",
+      "file": "books/en/6-7/28.txt",
+      "language": "en",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 29,
+      "title": "The Cat in the Hat",
+      "file": "books/en/6-7/29.txt",
+      "language": "en",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 30,
+      "title": "The Tale of Peter Rabbit",
+      "file": "books/en/6-7/30.txt",
+      "language": "en",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 31,
+      "title": "The Very Hungry Caterpillar",
+      "file": "books/en/6-7/31.txt",
+      "language": "en",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 32,
+      "title": "Anne of green gables",
+      "file": "books/en/8-9/32.txt",
+      "language": "en",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 33,
+      "title": "Peter Pan",
+      "file": "books/en/8-9/33.txt",
+      "language": "en",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 34,
+      "title": "The Famous Five",
+      "file": "books/en/8-9/34.txt",
+      "language": "en",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 35,
+      "title": "The Railway Children",
+      "file": "books/en/8-9/35.txt",
+      "language": "en",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 36,
+      "title": "The Secret Garden",
+      "file": "books/en/8-9/36.txt",
+      "language": "en",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 37,
+      "title": "Black Beauty",
+      "file": "books/en/10-11/37.txt",
+      "language": "en",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 38,
+      "title": "Cautionary tales for children",
+      "file": "books/en/10-11/38.txt",
+      "language": "en",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 39,
+      "title": "Collected Stories for Children",
+      "file": "books/en/10-11/39.txt",
+      "language": "en",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 40,
+      "title": "Five children and it",
+      "file": "books/en/10-11/40.txt",
+      "language": "en",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 41,
+      "title": "The adventures of Pinocchio",
+      "file": "books/en/10-11/41.txt",
+      "language": "en",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 42,
+      "title": "Gulliver's travels",
+      "file": "books/en/12-13/42.txt",
+      "language": "en",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 43,
+      "title": "In Search of the Castaways",
+      "file": "books/en/12-13/43.txt",
+      "language": "en",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 44,
+      "title": "Little Women",
+      "file": "books/en/12-13/44.txt",
+      "language": "en",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 45,
+      "title": "The prince and the pauper",
+      "file": "books/en/12-13/45.txt",
+      "language": "en",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 46,
+      "title": "Treasure Island",
+      "file": "books/en/12-13/46.txt",
+      "language": "en",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 47,
+      "title": "A Little Princess",
+      "file": "books/en/14-15/47.txt",
+      "language": "en",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 48,
+      "title": "Beautiful Stories from Shakespeare",
+      "file": "books/en/14-15/48.txt",
+      "language": "en",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 49,
+      "title": "Great Expectations",
+      "file": "books/en/14-15/49.txt",
+      "language": "en",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 50,
+      "title": "The jungle book",
+      "file": "books/en/14-15/50.txt",
+      "language": "en",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 51,
+      "title": "The Legend of Sleepy Hollow",
+      "file": "books/en/14-15/51.txt",
+      "language": "en",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 52,
+      "title": "Erster text",
+      "file": "books/de/6-7/52.txt",
+      "language": "de",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 53,
+      "title": "Der Struwwelpeter",
+      "file": "books/de/6-7/53.txt",
+      "language": "de",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 54,
+      "title": "Die Biene Maja und ihre Abenteuer",
+      "file": "books/de/6-7/54.txt",
+      "language": "de",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 55,
+      "title": "Kindergedichte",
+      "file": "books/de/6-7/55.txt",
+      "language": "de",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 56,
+      "title": "Max und Moritz",
+      "file": "books/de/6-7/56.txt",
+      "language": "de",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 57,
+      "title": "Was denkt die Maus am Donnerstag",
+      "file": "books/de/6-7/57.txt",
+      "language": "de",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 58,
+      "title": "Das Stuttgarter Hutzelmännlein",
+      "file": "books/de/8-9/58.txt",
+      "language": "de",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 59,
+      "title": "Der kleine Muck",
+      "file": "books/de/8-9/59.txt",
+      "language": "de",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 60,
+      "title": "Die Bremer Stadtmusikanten",
+      "file": "books/de/8-9/60.txt",
+      "language": "de",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 61,
+      "title": "Emil und die Detektive",
+      "file": "books/de/8-9/61.txt",
+      "language": "de",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 62,
+      "title": "Rotkäppchen",
+      "file": "books/de/8-9/62.txt",
+      "language": "de",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 63,
+      "title": "Das doppelte Lottchen",
+      "file": "books/de/10-11/63.txt",
+      "language": "de",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 64,
+      "title": "Das fliegende",
+      "file": "books/de/10-11/64.txt",
+      "language": "de",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 65,
+      "title": "Das Märchen vom Schlaraffenland",
+      "file": "books/de/10-11/65.txt",
+      "language": "de",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 66,
+      "title": "Der kleine Häwelmann",
+      "file": "books/de/10-11/66.txt",
+      "language": "de",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 67,
+      "title": "Deutsche Sagen",
+      "file": "books/de/10-11/67.txt",
+      "language": "de",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 68,
+      "title": "Die Kinder des Kapitaen Grant",
+      "file": "books/de/12-13/68.txt",
+      "language": "de",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 69,
+      "title": "Die Sage von Robin Hood",
+      "file": "books/de/12-13/69.txt",
+      "language": "de",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 70,
+      "title": "Die Schatzinsel",
+      "file": "books/de/12-13/70.txt",
+      "language": "de",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 71,
+      "title": "Huckleberry Finn",
+      "file": "books/de/12-13/71.txt",
+      "language": "de",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 72,
+      "title": "Robinson Crusoe",
+      "file": "books/de/12-13/72.txt",
+      "language": "de",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 73,
+      "title": "Der Graf von Monte Christo",
+      "file": "books/de/14-15/73.txt",
+      "language": "de",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 74,
+      "title": "Der Schimmelreiter",
+      "file": "books/de/14-15/74.txt",
+      "language": "de",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 75,
+      "title": "Die Judenbuche",
+      "file": "books/de/14-15/75.txt",
+      "language": "de",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 76,
+      "title": "Die Verwandlung",
+      "file": "books/de/14-15/76.txt",
+      "language": "de",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 77,
+      "title": "Michael Kohlhaas",
+      "file": "books/de/14-15/77.txt",
+      "language": "de",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 78,
+      "title": "Premier texte",
+      "file": "books/fr/6-7/78.txt",
+      "language": "fr",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 79,
+      "title": "Contes de Perrault",
+      "file": "books/fr/6-7/79.txt",
+      "language": "fr",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 80,
+      "title": "Fables de La Fontaine",
+      "file": "books/fr/6-7/80.txt",
+      "language": "fr",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 81,
+      "title": "Histoire de Babar",
+      "file": "books/fr/6-7/81.txt",
+      "language": "fr",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 82,
+      "title": "Le Petit Nicolas",
+      "file": "books/fr/6-7/82.txt",
+      "language": "fr",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 83,
+      "title": "Les Malheurs de Sophie",
+      "file": "books/fr/6-7/83.txt",
+      "language": "fr",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 84,
+      "title": "Contes merveilleux H.C.Andersen",
+      "file": "books/fr/8-9/84.txt",
+      "language": "fr",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 85,
+      "title": "Contes merveilleux H.C.Andersen",
+      "file": "books/fr/8-9/85.txt",
+      "language": "fr",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 86,
+      "title": "L_Île au trésor",
+      "file": "books/fr/8-9/86.txt",
+      "language": "fr",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 87,
+      "title": "Les Aventures d_Alice au pays des merveilles",
+      "file": "books/fr/8-9/87.txt",
+      "language": "fr",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 88,
+      "title": "Les Aventures de Pinocchio",
+      "file": "books/fr/8-9/88.txt",
+      "language": "fr",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 89,
+      "title": "Le Livre de la jungle",
+      "file": "books/fr/10-11/89.txt",
+      "language": "fr",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 90,
+      "title": "Le Petit Prince",
+      "file": "books/fr/10-11/90.txt",
+      "language": "fr",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 91,
+      "title": "Les aventures de Huckleberry Finn",
+      "file": "books/fr/10-11/91.txt",
+      "language": "fr",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 92,
+      "title": "Les Aventures de Tom Sawyer",
+      "file": "books/fr/10-11/92.txt",
+      "language": "fr",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 93,
+      "title": "Les voyages de Gulliver",
+      "file": "books/fr/10-11/93.txt",
+      "language": "fr",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 94,
+      "title": "Contes de la  Bécasse",
+      "file": "books/fr/12-13/94.txt",
+      "language": "fr",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 95,
+      "title": "La Petite Princesse",
+      "file": "books/fr/12-13/95.txt",
+      "language": "fr",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 96,
+      "title": "Le Comte de Monte-Cristo",
+      "file": "books/fr/12-13/96.txt",
+      "language": "fr",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 97,
+      "title": "Les Fleurs du Mal",
+      "file": "books/fr/12-13/97.txt",
+      "language": "fr",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 98,
+      "title": "Les trois mousquetaires",
+      "file": "books/fr/12-13/98.txt",
+      "language": "fr",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 99,
+      "title": "Bel-Ami",
+      "file": "books/fr/14-15/99.txt",
+      "language": "fr",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 100,
+      "title": "Candide, ou l'optimisme",
+      "file": "books/fr/14-15/100.txt",
+      "language": "fr",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 101,
+      "title": "L'Étranger",
+      "file": "books/fr/14-15/101.txt",
+      "language": "fr",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 102,
+      "title": "Les Liaisons dangereuses",
+      "file": "books/fr/14-15/102.txt",
+      "language": "fr",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 103,
+      "title": "Une vie",
+      "file": "books/fr/14-15/103.txt",
+      "language": "fr",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 104,
+      "title": "Первые тексты",
+      "file": "books/ru/6-7/104.txt",
+      "language": "ru",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 105,
+      "title": "А.Барто",
+      "file": "books/ru/6-7/105.txt",
+      "language": "ru",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 106,
+      "title": "С. Маршак",
+      "file": "books/ru/6-7/106.txt",
+      "language": "ru",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 107,
+      "title": "Народные сказки",
+      "file": "books/ru/6-7/107.txt",
+      "language": "ru",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 108,
+      "title": "К.Чуковский",
+      "file": "books/ru/6-7/108.txt",
+      "language": "ru",
+      "age_group": "6-7",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 109,
+      "title": "Винни-Пух и все-все-все",
+      "file": "books/ru/8-9/109.txt",
+      "language": "ru",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 110,
+      "title": "Волшебник Изумрудного города",
+      "file": "books/ru/8-9/110.txt",
+      "language": "ru",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 111,
+      "title": "Робинзон Крузо",
+      "file": "books/ru/8-9/111.txt",
+      "language": "ru",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 112,
+      "title": "Русские народные сказки",
+      "file": "books/ru/8-9/112.txt",
+      "language": "ru",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 113,
+      "title": "Три толстяка",
+      "file": "books/ru/8-9/113.txt",
+      "language": "ru",
+      "age_group": "8-9",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 114,
+      "title": "Дети капитана Гранта",
+      "file": "books/ru/10-11/114.txt",
+      "language": "ru",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },
+    {
+      "id": 115,
+      "title": "Кладовая солнца",
+      "file": "books/ru/10-11/115.txt",
+      "language": "ru",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 116,
+      "title": "Конёк-Горбунок",
+      "file": "books/ru/10-11/116.txt",
+      "language": "ru",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 117,
+      "title": "Остров сокровищ",
+      "file": "books/ru/10-11/117.txt",
+      "language": "ru",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 118,
+      "title": "Приключения Незнайки",
+      "file": "books/ru/10-11/118.txt",
+      "language": "ru",
+      "age_group": "10-11",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 119,
+      "title": "Алые паруса",
+      "file": "books/ru/12-13/119.txt",
+      "language": "ru",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 120,
+      "title": "Гостья из будущего",
+      "file": "books/ru/12-13/120.txt",
+      "language": "ru",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 121,
+      "title": "Кавказский пленник",
+      "file": "books/ru/12-13/121.txt",
+      "language": "ru",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 122,
+      "title": "Капитанская дочка",
+      "file": "books/ru/12-13/122.txt",
+      "language": "ru",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 123,
+      "title": "Судьба человека",
+      "file": "books/ru/12-13/123.txt",
+      "language": "ru",
+      "age_group": "12-13",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 124,
+      "title": "Герой нашего времени",
+      "file": "books/ru/14-15/124.txt",
+      "language": "ru",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 125,
+      "title": "Гранатовый браслет",
+      "file": "books/ru/14-15/125.txt",
+      "language": "ru",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 126,
+      "title": "Детство",
+      "file": "books/ru/14-15/126.txt",
+      "language": "ru",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 127,
+      "title": "Дубровский",
+      "file": "books/ru/14-15/127.txt",
+      "language": "ru",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    },{
+      "id": 128,
+      "title": "Тарас Бульба",
+      "file": "books/ru/14-15/128.txt",
+      "language": "ru",
+      "age_group": "14-15",
+      "author": "",
+      "storageType": "ASSETS"
+    }
+  ]
+}

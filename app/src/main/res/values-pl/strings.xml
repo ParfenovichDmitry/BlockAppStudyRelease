@@ -75,6 +75,23 @@
     <string name="deselect_all">Odznacz wszystko</string>
     <string name="selected_apps_title">Wybrane aplikacje</string>
     <string name="loading_placeholder">Ładowanie...</string>
+    <string name="show_all_books">Pokaż wszystkie książki</string>
+    <string name="add_book">Dodaj książkę</string>
+    <string name="without_additional_language">Bez dodatkowego języka</string>
+    <string name="language_label">Język: %1$s</string>
+    <string name="age_label2">Wiek: %1$s</string>
+    <string name="progress">Postęp: %.2f%%</string>
+    <string name="preview">Podgląd</string>
+    <string name="confirm_deletion_title">Potwierdź usunięcie</string>
+    <string name="confirm_deletion_message">Czy na pewno chcesz usunąć książkę \'%1$s\'?</string>
+    <string name="error_file_name">Nie udało się uzyskać nazwy pliku</string>
+    <string name="error_file_format">Nieobsługiwany format pliku: .%1$s</string>
+    <string name="error_open_stream">Nie udało się otworzyć strumienia pliku</string>
+    <string name="error_add_book">Błąd dodawania książki: %1$s</string>
+    <string name="error_delete_book">Błąd usuwania książki: %1$s</string>
+    <string name="user_author">Użytkownik</string>
+
+
 
 
 

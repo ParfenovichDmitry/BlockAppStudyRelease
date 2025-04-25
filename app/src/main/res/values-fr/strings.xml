@@ -84,6 +84,24 @@
     <string name="deselect_all">Tout désélectionner</string>
     <string name="selected_apps_title">Applications sélectionnées</string>
     <string name="loading_placeholder">Chargement...</string>
+    <string name="show_all_books">Afficher tous les livres</string>
+    <string name="add_book">Ajouter un livre</string>
+    <string name="without_additional_language">Sans langue supplémentaire</string>
+    <string name="language_label">Language: %1$s</string>
+    <string name="age_label2">Âge: %1$s</string>
+    <string name="progress">Progression : %.2f%%</string>
+    <string name="preview">Aperçu</string>
+    <string name="confirm_deletion_title">Confirmer la suppression</string>
+    <string name="confirm_deletion_message">Êtes-vous sûr de vouloir supprimer le livre \'%1$s\' ?</string>
+    <string name="error_file_name">Échec de l\'obtention du nom de fichier</string>
+    <string name="error_file_format">Format de fichier non pris en charge : .%1$s</string>
+    <string name="error_open_stream">Échec de l\'ouverture du flux de fichier</string>
+    <string name="error_add_book">Erreur d\'ajout du livre : %1$s</string>
+    <string name="error_delete_book">Erreur de suppression du livre : %1$s</string>
+    <string name="user_author">Utilisateur</string>
+
+
+
 
 
 

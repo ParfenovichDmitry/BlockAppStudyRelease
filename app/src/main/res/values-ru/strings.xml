@@ -77,6 +77,22 @@
     <string name="deselect_all">Снять выделение</string>
     <string name="selected_apps_title">Выбор приложений</string>
     <string name="loading_placeholder">Загрузка...</string>
+    <string name="show_all_books">Показать все книги</string>
+    <string name="add_book">Добавить книгу</string>
+    <string name="without_additional_language">Без доп. языка</string>
+    <string name="language_label">Язык: %1$s</string>
+    <string name="age_label2">Возраст: %1$s</string>
+    <string name="progress">Прогресс: %.2f%%</string>
+    <string name="preview">Предпросмотр</string>
+    <string name="confirm_deletion_title">Подтверждение удаления</string>
+    <string name="confirm_deletion_message">Вы уверены, что хотите удалить книгу \'%1$s\'?</string>
+    <string name="error_file_name">Не удалось получить имя файла</string>
+    <string name="error_file_format">Неподдерживаемый формат файла: .%1$s</string>
+    <string name="error_open_stream">Не удалось открыть поток для файла</string>
+    <string name="error_add_book">Ошибка добавления книги: %1$s</string>
+    <string name="error_delete_book">Ошибка удаления книги: %1$s</string>
+    <string name="user_author">Пользователь</string>
+
 
 
 

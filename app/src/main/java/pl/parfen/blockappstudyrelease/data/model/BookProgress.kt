@@ -10,7 +10,7 @@ data class BookProgress(
     val id: Int = 0,
 
     @ColumnInfo(name = "profile_id")
-    val profileId: Int, // ID профиля
+    val profileId: Int,
 
     @ColumnInfo(name = "title")
     val title: String,
