@@ -92,7 +92,7 @@
     <string name="progress">Progression : %.2f%%</string>
     <string name="preview">Aperçu</string>
     <string name="confirm_deletion_title">Confirmer la suppression</string>
-    <string name="confirm_deletion_message">Êtes-vous sûr de vouloir supprimer le livre \'%1$s\' ?</string>
+    <string name="confirm_deletion_message">Êtes-vous sûr de vouloir supprimer le livre « %1$s » ?</string>
     <string name="error_file_name">Échec de l\'obtention du nom de fichier</string>
     <string name="error_file_format">Format de fichier non pris en charge : .%1$s</string>
     <string name="error_open_stream">Échec de l\'ouverture du flux de fichier</string>

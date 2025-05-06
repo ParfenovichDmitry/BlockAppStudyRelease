@@ -4,93 +4,87 @@ import android.content.Context
 import android.net.Uri
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import pl.parfen.blockappstudyrelease.R
-import pl.parfen.blockappstudyrelease.data.local.db.AppDatabase
+import pl.parfen.blockappstudyrelease.data.database.AppDatabase
 import pl.parfen.blockappstudyrelease.data.model.Book
 import pl.parfen.blockappstudyrelease.data.model.StorageType
 import java.io.File
 import java.io.IOException
+import androidx.core.net.toUri
 
 object BookRepository {
 
-    private var cachedBooksJson: String? = null
-    private var cachedParsedBooks: List<Book>? = null
-
-    fun loadBooksJson(context: Context): String {
-        cachedBooksJson?.let { return it }
+    private fun loadBooksJson(context: Context): String {
         return try {
             val inputStream = context.assets.open("books.json")
-            val json = inputStream.bufferedReader().use { it.readText() }
-            cachedBooksJson = json
-            json
-        } catch (_: Exception) {
-            "{\"books\": []}".also { cachedBooksJson = it }
+            inputStream.bufferedReader().use { it.readText() }
+        } catch (_: IOException) {
+            "{\"books\": []}"
         }
     }
 
-    fun parseBooksJson(json: String): List<Book> {
-        cachedParsedBooks?.let { return it }
+    private fun parseBooksJson(json: String): List<Book> {
         return try {
-            val jsonObject = Gson().fromJson(json, Map::class.java)
-            val booksJsonElement = Gson().toJsonTree(jsonObject["books"])
+            val gson = Gson()
+            val jsonObject = gson.fromJson(json, Map::class.java)
+            val booksJsonElement = gson.toJsonTree(jsonObject["books"])
             val type = object : TypeToken<List<Map<String, Any>>>() {}.type
-            val rawBooks: List<Map<String, Any>> = Gson().fromJson(booksJsonElement, type)
+            val rawBooks: List<Map<String, Any>> = gson.fromJson(booksJsonElement, type)
 
-            val books = rawBooks.mapNotNull { raw ->
+            rawBooks.mapNotNull { raw ->
                 try {
+                    val ageGroup = raw["age_group"] as? String
+                    val id = (raw["id"] as? Double)?.toInt()
+                    val title = raw["title"] as? String
+                    val file = raw["file"] as? String
+                    val language = raw["language"] as? String
+                    val author = raw["author"] as? String
+                    val storageTypeString = raw["storageType"] as? String
+
+                    if (id == null || title == null || file == null || language == null) return@mapNotNull null
+
+                    val storageType = when (storageTypeString?.uppercase()) {
+                        "ASSETS" -> StorageType.ASSETS
+                        "GOOGLE_DRIVE" -> StorageType.GOOGLE_DRIVE
+                        else -> StorageType.INTERNAL
+                    }
+
                     Book(
-                        id = (raw["id"] as? Double)?.toInt() ?: return@mapNotNull null,
-                        title = raw["title"] as? String ?: return@mapNotNull null,
-                        file = raw["file"] as? String ?: return@mapNotNull null,
-                        language = raw["language"] as? String ?: return@mapNotNull null,
-                        ageGroup = raw["age_group"] as? String,
-                        author = raw["author"] as? String ?: "",
+                        id = id,
+                        title = title,
+                        file = file,
+                        language = language,
+                        ageGroup = ageGroup,
+                        author = author ?: "",
                         isUserBook = false,
-                        storageType = when ((raw["storageType"] as? String)?.uppercase()) {
-                            "ASSETS" -> StorageType.ASSETS
-                            "GOOGLE_DRIVE" -> StorageType.GOOGLE_DRIVE
-                            else -> StorageType.INTERNAL
-                        }
+                        storageType = storageType
                     )
                 } catch (_: Exception) {
                     null
                 }
             }
-
-            cachedParsedBooks = books
-            books
         } catch (_: Exception) {
             emptyList()
         }
     }
 
-    fun getBooksForAgeAndLanguage(
-        books: List<Book>,
-        age: String,
-        languages: List<String>,
-        showAllBooks: Boolean
-    ): List<Book> {
-        val normalizedLanguages = languages.map { it.trim().lowercase() }
-        val ageInt = age.toIntOrNull() ?: 0
+    private fun isAgeInRange(ageGroup: String?, age: Int): Boolean {
+        if (ageGroup == null) return false
+        if (ageGroup == "user") return true
 
-        return books.filter { book ->
-            val ageGroup = book.ageGroup ?: return@filter false
-            val isAgeMatch = showAllBooks || ageGroup == "all" || isAgeInRange(ageGroup, ageInt)
-            val isLanguageMatch = book.language.lowercase() in normalizedLanguages || book.language == "user"
-            isAgeMatch && isLanguageMatch
-        }
-    }
+        val validRanges = mapOf(
+            "6-7" to (6..7),
+            "8-9" to (8..9),
+            "10-11" to (10..11),
+            "12-13" to (12..13),
+            "14-15" to (14..15)
+        )
 
-    private fun isAgeInRange(ageGroup: String, age: Int): Boolean {
-        return try {
-            if (ageGroup.contains("-")) {
-                val (start, end) = ageGroup.split("-").mapNotNull { it.toIntOrNull() }
-                age in start..end
-            } else {
-                ageGroup.toIntOrNull() == age
-            }
-        } catch (_: Exception) {
-            false
+        return when {
+            ageGroup.contains("-") -> validRanges[ageGroup]?.contains(age) ?: false
+            else -> ageGroup.toIntOrNull()?.let { it == age } ?: false
         }
     }
 
@@ -102,78 +96,99 @@ object BookRepository {
         showAllBooks: Boolean,
         includeUserBooks: Boolean,
         profileId: Int
-    ): List<Book> {
-        clearCache()
-
+    ): List<Book> = withContext(Dispatchers.IO) {
         val json = loadBooksJson(context)
         val rawBooks = parseBooksJson(json)
 
-        val ageInt = age.toIntOrNull() ?: 0
-        val ageRange = when {
-            ageInt <= 7 -> "6-7"
-            ageInt <= 9 -> "8-9"
-            ageInt <= 11 -> "10-11"
-            ageInt <= 13 -> "12-13"
-            else -> "14-15"
-        }
+        val ageInt = age.toIntOrNull() ?: return@withContext emptyList()
+        val normPrimary = primaryLanguage.lowercase()
+        val normSecondary = secondaryLanguage?.lowercase()
 
-        val normalizedPrimary = primaryLanguage.lowercase()
-        val normalizedSecondary = secondaryLanguage?.lowercase()
-        val useSecondary = !normalizedSecondary.isNullOrEmpty()
-
-        val filteredBooks = rawBooks.filter { book ->
-            val bookLang = book.language.lowercase()
-            val isLangMatch = if (useSecondary) {
-                bookLang == normalizedPrimary || bookLang == normalizedSecondary
-            } else {
-                bookLang == normalizedPrimary
-            }
-
-            val isAgeMatch = if (showAllBooks) true else {
-                book.ageGroup == "all" || book.ageGroup == ageRange
-            }
-
-            isLangMatch && isAgeMatch
-        }
-
-        val systemBooks = filteredBooks.map { book ->
+        val systemBooks = rawBooks.filter { book ->
+            val langMatch = book.language.lowercase() == normPrimary || (normSecondary != null && book.language.lowercase() == normSecondary)
+            val ageMatch = if (showAllBooks) true else isAgeInRange(book.ageGroup, ageInt)
+            langMatch && ageMatch
+        }.map { book ->
             try {
                 book.copy(
                     pages = calculatePages(context, book),
                     progress = 0f,
-                    ageGroup = book.ageGroup ?: "user",
+                    ageGroup = book.ageGroup ?: "system",
                     storageType = book.storageType
                 )
             } catch (_: Exception) {
-                book.copy(
-                    pages = 1,
-                    ageGroup = book.ageGroup ?: "user",
-                    storageType = book.storageType
-                )
+                book.copy(pages = 1)
             }
         }
 
         val userBooks = if (includeUserBooks) {
             val db = AppDatabase.getDatabase(context)
             val progressDao = db.bookProgressDao()
-            progressDao.getProgressForProfile(profileId).map { progress ->
-                val book = Book(
-                    id = progress.title.hashCode(),
-                    title = progress.title,
-                    file = progress.file,
-                    fileUri = progress.fileUri,
-                    progress = progress.progress.toFloat(),
-                    ageGroup = "user",
-                    language = progress.language,
-                    author = context.getString(R.string.user_author),
-                    isUserBook = true,
-                    storageType = StorageType.INTERNAL
-                )
-                book.copy(pages = calculatePages(context, book))
-            }
-        } else emptyList()
+            val rawUserBooks = progressDao.getProgressForProfile(profileId)
 
-        return (systemBooks + userBooks).distinctBy { it.title }
+            val uniqueUserBooks = rawUserBooks.distinctBy { it.title + it.fileUri }
+            val filteredUserBooks = uniqueUserBooks.filter { userBook ->
+                systemBooks.none { systemBook ->
+                    systemBook.file == userBook.file || systemBook.file == userBook.fileUri
+                }
+            }
+
+            filteredUserBooks.map { progress ->
+                try {
+                    Book(
+                        id = progress.title.hashCode(),
+                        title = progress.title,
+                        file = progress.file,
+                        fileUri = progress.fileUri,
+                        progress = progress.progress.toFloat(),
+                        ageGroup = "user",
+                        language = progress.language,
+                        author = context.getString(R.string.user_author),
+                        isUserBook = true,
+                        storageType = StorageType.INTERNAL,
+                        pages = calculatePages(
+                            context,
+                            Book(
+                                id = progress.title.hashCode(),
+                                title = progress.title,
+                                file = progress.file,
+                                fileUri = progress.fileUri,
+                                progress = progress.progress.toFloat(),
+                                ageGroup = "user",
+                                language = progress.language,
+                                author = context.getString(R.string.user_author),
+                                isUserBook = true,
+                                storageType = StorageType.INTERNAL
+                            )
+                        )
+                    )
+                } catch (_: Exception) {
+                    Book(
+                        id = progress.title.hashCode(),
+                        title = progress.title,
+                        file = progress.file,
+                        fileUri = progress.fileUri,
+                        progress = progress.progress.toFloat(),
+                        ageGroup = "user",
+                        language = progress.language,
+                        author = context.getString(R.string.user_author),
+                        isUserBook = true,
+                        storageType = StorageType.INTERNAL,
+                        pages = 1
+                    )
+                }
+            }
+        } else {
+            emptyList()
+        }
+
+        val allBooks = mutableListOf<Book>()
+        allBooks.addAll(systemBooks)
+        allBooks.addAll(userBooks)
+
+        allBooks.distinctBy {
+            if (it.isUserBook) "user_${it.title}_${it.fileUri}" else "system_${it.id}"
+        }
     }
 
     private fun calculatePages(context: Context, book: Book): Int {
@@ -182,8 +197,10 @@ object BookRepository {
             val inputStream = when (realStorageType) {
                 StorageType.ASSETS -> context.assets.open(book.file)
                 StorageType.INTERNAL -> File(book.file).inputStream()
-                StorageType.GOOGLE_DRIVE -> context.contentResolver.openInputStream(Uri.parse(book.fileUri))
-                    ?: throw IOException("Cannot open file from Google Drive")
+                StorageType.GOOGLE_DRIVE -> context.contentResolver.openInputStream(
+                    book.fileUri?.toUri() as Uri
+                ) ?: throw IOException("Cannot open file from Google Drive: ${book.fileUri}")
+
             }
             val linesCount = inputStream.bufferedReader().useLines { it.count() }
             (linesCount / 50).coerceAtLeast(1)
@@ -191,12 +208,4 @@ object BookRepository {
             1
         }
     }
-
-    fun clearCache() {
-        cachedBooksJson = null
-        cachedParsedBooks = null
-    }
-
-    fun addBook(context: Context, book: Book) {}
-    fun removeBook(book: Book) {}
 }

@@ -103,15 +103,17 @@ fun CreateProfileScreen(viewModel: CreateProfileViewModel) {
                 isAgeValid = uiState.isAgeValid(),
                 onResourceSelected = { viewModel.updateSelectedResource(it) },
                 onBookClick = {
-                    if (uiState.isAgeValid()) {
+                    if (viewModel.uiState.value.isAgeValid()) {
                         val intent = Intent(context, SelectBookActivity::class.java).apply {
-                            putExtra("age", uiState.age.toIntOrNull() ?: 0)
+                            putExtra("age", viewModel.uiState.value.age.toIntOrNull() ?: 0)
                         }
                         selectBookLauncher.launch(intent)
                     } else {
                         viewModel.showAgeValidationAlert()
                     }
-                },
+
+
+        },
                 onAIClick = {
                     if (uiState.isAgeValid()) {
                         val intent = Intent(context, SelectAIActivity::class.java).apply {

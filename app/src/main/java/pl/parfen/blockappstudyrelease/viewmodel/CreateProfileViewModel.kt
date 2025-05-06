@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import pl.parfen.blockappstudyrelease.data.local.db.AppDatabase
+import pl.parfen.blockappstudyrelease.data.database.AppDatabase
 import pl.parfen.blockappstudyrelease.data.preferences.ProfilePreferences
 
 

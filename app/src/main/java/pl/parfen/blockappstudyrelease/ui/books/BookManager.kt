@@ -5,7 +5,7 @@ import android.net.Uri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import pl.parfen.blockappstudyrelease.R
-import pl.parfen.blockappstudyrelease.data.local.db.AppDatabase
+import pl.parfen.blockappstudyrelease.data.database.AppDatabase
 import pl.parfen.blockappstudyrelease.data.model.Book
 import pl.parfen.blockappstudyrelease.data.model.BookProgress
 import pl.parfen.blockappstudyrelease.data.model.StorageType
@@ -16,46 +16,49 @@ object BookManager {
     private const val SUPPORTED_DIR = "user_books"
     private const val DEFAULT_LANGUAGE = "user"
     private const val DEFAULT_AGE = "user"
+    private val SUPPORTED_FORMATS = listOf("txt", "pdf", "epub", "doc", "docx")
 
     suspend fun handleUriResult(context: Context, uri: Uri, profileId: Int): Book {
         return withContext(Dispatchers.IO) {
             val fileName = getFileName(context, uri)
-                ?: throw Exception(context.getString(R.string.error_file_name))
+            fileName?.let {
+                val extension = it.substringAfterLast('.', "").lowercase()
+                if (extension !in SUPPORTED_FORMATS)
+                    throw Exception(context.getString(R.string.error_file_format, extension))
 
-            val extension = fileName.substringAfterLast('.', "").lowercase()
-            val supported = listOf("txt", "pdf", "epub", "doc", "docx")
+                val normalizedFileName = it
+                    .substringBeforeLast('.')
+                    .replace(" ", "_")
+                    .replace(Regex("[^A-Za-z0-9_]"), "")
+                    .lowercase()
 
-            if (extension !in supported)
-                throw Exception(context.getString(R.string.error_file_format, extension))
+                val userBooksDir = File(context.filesDir, SUPPORTED_DIR).apply { mkdirs() }
+                val destFile = File(userBooksDir, "$normalizedFileName.$extension")
 
-            val normalizedFileName = fileName
-                .substringBeforeLast('.')
-                .replace(" ", "_")
-                .replace(Regex("[^A-Za-z0-9_]"), "")
-                .lowercase()
+                try {
+                    context.contentResolver.openInputStream(uri)?.use { input ->
+                        destFile.outputStream().use { output -> input.copyTo(output) }
+                    } ?: throw Exception(context.getString(R.string.error_open_stream))
+                } catch (e: Exception) {
+                    throw e
+                }
 
-            val userBooksDir = File(context.filesDir, SUPPORTED_DIR).apply { mkdirs() }
-            val destFile = File(userBooksDir, "$normalizedFileName.$extension")
+                val book = Book(
+                    id = 1000 + destFile.hashCode(),
+                    title = it,
+                    file = destFile.absolutePath,
+                    language = DEFAULT_LANGUAGE,
+                    ageGroup = DEFAULT_AGE,
+                    author = context.getString(R.string.user_author),
+                    isUserBook = true,
+                    progress = 0f,
+                    fileUri = uri.toString(),
+                    storageType = StorageType.INTERNAL
+                )
 
-            context.contentResolver.openInputStream(uri)?.use { input ->
-                destFile.outputStream().use { output -> input.copyTo(output) }
-            } ?: throw Exception(context.getString(R.string.error_open_stream))
-
-            val book = Book(
-                id = 1000 + destFile.hashCode(),
-                title = fileName,
-                file = destFile.absolutePath,
-                language = DEFAULT_LANGUAGE,
-                ageGroup = DEFAULT_AGE,
-                author = context.getString(R.string.user_author),
-                isUserBook = true,
-                progress = 0f,
-                fileUri = uri.toString(),
-                storageType = StorageType.INTERNAL
-            )
-
-            saveUserBookToDb(context, profileId, book)
-            return@withContext book
+                saveUserBookToDb(context, profileId, book)
+                return@withContext book
+            } ?: throw Exception(context.getString(R.string.error_file_name))
         }
     }
 

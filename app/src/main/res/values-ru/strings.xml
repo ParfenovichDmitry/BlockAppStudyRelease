@@ -85,7 +85,7 @@
     <string name="progress">Прогресс: %.2f%%</string>
     <string name="preview">Предпросмотр</string>
     <string name="confirm_deletion_title">Подтверждение удаления</string>
-    <string name="confirm_deletion_message">Вы уверены, что хотите удалить книгу \'%1$s\'?</string>
+    <string name="confirm_deletion_message">Вы уверены, что хотите удалить книгу «%1$s»?</string>
     <string name="error_file_name">Не удалось получить имя файла</string>
     <string name="error_file_format">Неподдерживаемый формат файла: .%1$s</string>
     <string name="error_open_stream">Не удалось открыть поток для файла</string>

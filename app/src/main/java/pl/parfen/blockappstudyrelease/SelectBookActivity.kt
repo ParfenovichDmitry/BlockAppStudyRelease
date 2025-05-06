@@ -3,7 +3,6 @@ package pl.parfen.blockappstudyrelease
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-
 import androidx.activity.compose.setContent
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pl.parfen.blockappstudyrelease.ui.books.BookScreen
@@ -17,8 +16,7 @@ class SelectBookActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         val profileId = intent.getIntExtra("profile_id", -1)
-        val ageInt = intent.getIntExtra("age", -1)
-        val age = if (ageInt != -1) ageInt.toString() else "?"
+        val age = intent.getIntExtra("age", -1).takeIf { it != -1 }?.toString() ?: "?"
 
         val language = getSharedPreferences("app_settings", MODE_PRIVATE)
             .getString("selected_language", "en") ?: "en"
@@ -38,10 +36,7 @@ class SelectBookActivity : BaseActivity() {
                         val resultIntent = Intent().apply {
                             putExtra("showAllBooks", updatedShowAllBooks)
                             putExtra("additionalLanguage", updatedSecondaryLanguage)
-                            putExtra(
-                                "selectedBookTitle",
-                                bookViewModel.uiState.value.selectedBookTitle
-                            )
+                            putExtra("selectedBookTitle", bookViewModel.uiState.value.selectedBookTitle)
                         }
                         setResult(Activity.RESULT_OK, resultIntent)
                         finish()

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
-import pl.parfen.blockappstudyrelease.data.local.db.AppDatabase
+import pl.parfen.blockappstudyrelease.data.database.AppDatabase
 
 class ProfilesViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")

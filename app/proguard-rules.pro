@@ -1,21 +1,51 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# --- Сохраняем классы Room (БД)
+-keep class androidx.room.** { *; }
+-keepclassmembers class * {
+    @androidx.room.* <methods>;
+    @androidx.room.* <fields>;
+}
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# --- Оставляем Model классы (Gson)
+-keep class com.google.gson.** { *; }
+-keepclassmembers class * {
+    @com.google.gson.annotations.SerializedName <fields>;
+}
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# --- Сохраняем модели данных (например, Book)
+-keep class pl.parfen.blockappstudyrelease.data.model.** { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# --- Для Apache POI (DOC, DOCX)
+-keep class org.apache.poi.** { *; }
+-dontwarn org.apache.poi.**
+
+# --- Для iText PDF
+-keep class com.itextpdf.** { *; }
+-dontwarn com.itextpdf.**
+
+# --- Для Jsoup (EPUB чтение HTML)
+-keep class org.jsoup.** { *; }
+-dontwarn org.jsoup.**
+
+# --- Для Coil (загрузка изображений)
+-keep class coil.** { *; }
+-dontwarn coil.**
+
+# --- Для Kotlin Coroutines
+-dontwarn kotlinx.coroutines.**
+
+# --- Для Compose (UI)
+-keep class androidx.compose.** { *; }
+-dontwarn androidx.compose.**
+
+# --- Общие настройки безопасности
+-dontwarn javax.annotation.**
+-dontwarn sun.misc.**
+
+# --- Обработка Kotlin Metadata
+-keepclassmembers class ** {
+    @kotlin.Metadata *;
+}
+
+# --- Для Google ML Kit (если OCR используется)
+-keep class com.google.mlkit.** { *; }
+-dontwarn com.google.mlkit.**

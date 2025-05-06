@@ -1,7 +1,7 @@
 package pl.parfen.blockappstudyrelease.ui.books
 
 import android.content.Context
-import pl.parfen.blockappstudyrelease.data.local.db.AppDatabase
+import pl.parfen.blockappstudyrelease.data.database.AppDatabase
 import pl.parfen.blockappstudyrelease.data.model.Book
 
 data class BookUiState(
@@ -19,8 +19,11 @@ data class BookUiState(
     val appsSavedText: String = "",
     val error: String? = null,
     val isProfileLoaded: Boolean = false,
-    val scrollPosition: Int = 0
-    )
+    val scrollPosition: Int = 0,
+    val showUserBooks: Boolean = false,
+    val addedUserBooks: List<Book> = emptyList()
+)
+
 suspend fun saveUiSettings(
     context: Context,
     profileId: Int,
@@ -40,4 +43,3 @@ suspend fun saveUiSettings(
         )
     }
 }
-

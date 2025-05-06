@@ -91,7 +91,7 @@
     <string name="progress">Progress: %.2f%%</string>
     <string name="preview">Preview</string>
     <string name="confirm_deletion_title">Confirm Deletion</string>
-    <string name="confirm_deletion_message">Are you sure you want to delete the book \'%1$s\'?</string>
+    <string name="confirm_deletion_message">Are you sure you want to delete the book “%1$s”?</string>
     <string name="error_file_name">Failed to get file name</string>
     <string name="error_file_format">Unsupported file format: .%1$s</string>
     <string name="error_open_stream">Failed to open file stream</string>

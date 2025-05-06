@@ -82,7 +82,7 @@
     <string name="progress">Fortschritt: %.2f%%</string>
     <string name="preview">Vorschau</string>
     <string name="confirm_deletion_title">Löschung bestätigen</string>
-    <string name="confirm_deletion_message">Sind Sie sicher, dass Sie das Buch \'%1$s\' löschen möchten?</string>
+    <string name="confirm_deletion_message">Möchten Sie das Buch „%1$s“ wirklich löschen?</string>
     <string name="error_file_name">Dateiname konnte nicht abgerufen werden</string>
     <string name="error_file_format">Nicht unterstütztes Dateiformat: .%1$s</string>
     <string name="error_open_stream">Dateistream konnte nicht geöffnet werden</string>

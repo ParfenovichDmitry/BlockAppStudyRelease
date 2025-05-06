@@ -1,7 +1,10 @@
 package pl.parfen.blockappstudyrelease.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Book(
     val id: Int,
     val title: String,
@@ -17,4 +20,4 @@ data class Book(
     val pages: Int = 1,
     val progress: Float = 0f,
     val fileUri: String? = null
-)
+) : Parcelable

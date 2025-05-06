@@ -83,7 +83,7 @@
     <string name="progress">Postęp: %.2f%%</string>
     <string name="preview">Podgląd</string>
     <string name="confirm_deletion_title">Potwierdź usunięcie</string>
-    <string name="confirm_deletion_message">Czy na pewno chcesz usunąć książkę \'%1$s\'?</string>
+    <string name="confirm_deletion_message">Czy na pewno chcesz usunąć książkę „%1$s”?</string>
     <string name="error_file_name">Nie udało się uzyskać nazwy pliku</string>
     <string name="error_file_format">Nieobsługiwany format pliku: .%1$s</string>
     <string name="error_open_stream">Nie udało się otworzyć strumienia pliku</string>

@@ -1,6 +1,5 @@
 package pl.parfen.blockappstudyrelease.ui.books
 
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -56,13 +55,11 @@ fun BookScreen(
             uri?.let { viewModel.addUserBook(it, profileId) }
         }
 
-    val restoredFlag = remember { mutableStateOf(false) }
+    var currentAge by remember { mutableStateOf(age) }
 
-    LaunchedEffect(Unit) {
-        if (!restoredFlag.value) {
-            viewModel.restoreUiStateFromProfile(profileId, age, primaryLanguage)
-            restoredFlag.value = true
-        }
+    LaunchedEffect(profileId, primaryLanguage) {
+        viewModel.restoreUiStateFromProfile(profileId, age, primaryLanguage)
+        currentAge = age
     }
 
     LaunchedEffect(uiState.books, uiState.selectedBookTitle) {
@@ -81,13 +78,14 @@ fun BookScreen(
         }
     }
 
-    LaunchedEffect(uiState.showAllBooks, uiState.secondaryLanguage) {
+    LaunchedEffect(uiState.showAllBooks, uiState.secondaryLanguage, currentAge) {
         if (uiState.isProfileLoaded) {
             viewModel.loadBooks(
-                age = uiState.age,
+                age = currentAge,
                 primaryLanguage = uiState.primaryLanguage,
                 secondaryLanguage = uiState.secondaryLanguage,
                 showAllBooks = uiState.showAllBooks,
+                includeUserBooks = true,
                 profileId = profileId
             )
         }
@@ -104,7 +102,7 @@ fun BookScreen(
                 bookToDelete = null
             },
             title = { Text(stringResource(R.string.confirm_deletion_title)) },
-            text = { Text(stringResource(R.string.confirm_deletion_message)) },
+            text = { Text(stringResource(R.string.confirm_deletion_message, bookToDelete?.title.orEmpty())) },
             confirmButton = {
                 Button(onClick = {
                     bookToDelete?.let { viewModel.deleteUserBook(it, profileId) }
@@ -141,7 +139,7 @@ fun BookScreen(
                 .background(Brush.verticalGradient(listOf(GreenLight, GreenMedium)))
                 .padding(16.dp)
         ) {
-            BookHeader(language = uiState.primaryLanguage, age = if (uiState.age.isNotEmpty()) uiState.age else "?")
+            BookHeader(language = uiState.primaryLanguage, age = currentAge.ifEmpty { "?" })
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -208,10 +206,8 @@ fun BookScreen(
                             BookItem(
                                 book = book,
                                 isSelected = book.title == uiState.selectedBookTitle,
-                                onClick = {
-                                    viewModel.selectBook(book.title)
-                                },
-                                onPreview = { viewModel.openPreview(book, profileId) },
+                                onClick = { viewModel.selectBook(book.title) },
+                                onPreview = { viewModel.openPreview(context, book) },
                                 onLongClick = {
                                     if (book.isUserBook && book.storageType != StorageType.ASSETS) {
                                         bookToDelete = book

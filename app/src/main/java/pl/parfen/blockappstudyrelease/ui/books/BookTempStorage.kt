@@ -1,7 +1,5 @@
-package pl.parfen.blockappstudyrelease.ui.books
-
+import pl.parfen.blockappstudyrelease.data.model.Book
 import pl.parfen.blockappstudyrelease.data.model.BookProgress
-
 
 object BookTempStorage {
     private val tempBookProgressList = mutableListOf<BookProgress>()

@@ -32,6 +32,13 @@ interface BookProgressDao {
 
     @Query("DELETE FROM book_progress WHERE id = :id")
     suspend fun deleteById(id: Int)
+
     @Query("DELETE FROM book_progress WHERE profile_id = :profileId AND title = :title")
     fun deleteByProfileIdAndTitle(profileId: Int, title: String)
+
+    @Query("DELETE FROM book_progress WHERE profile_id = :profileId")
+    suspend fun deleteAllForProfile(profileId: Int)
+
+    @Query("DELETE FROM book_progress")
+    suspend fun deleteAll()
 }

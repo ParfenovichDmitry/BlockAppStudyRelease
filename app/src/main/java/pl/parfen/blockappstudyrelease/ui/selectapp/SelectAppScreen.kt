@@ -76,18 +76,17 @@ fun SelectAppScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                brush = Brush.verticalGradient(
-                    colors = listOf(GreenLight, GreenMedium)
-                )
+                brush = Brush.verticalGradient(colors = listOf(GreenLight, GreenMedium))
             )
-            .padding(16.dp)
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TopTitle(text = stringResource(R.string.selected_apps_title))
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             if (!isAppsLoaded) {
                 CircularProgressIndicator()
@@ -96,12 +95,11 @@ fun SelectAppScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f)
-                        .padding(bottom = 100.dp)
                 ) {
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(end = 20.dp),
+                            .padding(end = 12.dp),
                         state = scrollState
                     ) {
                         items(uiState.appList) { appInfo ->
@@ -113,7 +111,7 @@ fun SelectAppScreen(
                         }
                     }
 
-                    // Кастомный скроллбар
+                    // Скроллбар
                     val totalItems = uiState.appList.size
                     val visibleItems = scrollState.layoutInfo.visibleItemsInfo.size
                     val firstVisibleItemIndex = scrollState.firstVisibleItemIndex
@@ -129,19 +127,10 @@ fun SelectAppScreen(
                     Box(
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
-                            .width(20.dp)
+                            .width(18.dp)
                             .fillMaxHeight()
+                            .padding(end = 4.dp)
                             .pointerInput(Unit) {
-                                detectTapGestures { offset ->
-                                    val totalScrollableItems =
-                                        (totalItems - visibleItems).coerceAtLeast(1)
-                                    val tapFraction = offset.y / size.height
-                                    val targetIndex = (tapFraction * totalScrollableItems).toInt()
-                                        .coerceIn(0, totalScrollableItems)
-                                    coroutineScope.launch {
-                                        scrollState.scrollToItem(targetIndex)
-                                    }
-                                }
                                 detectDragGestures { change, dragAmount ->
                                     change.consume()
                                     val totalScrollableItems =
@@ -149,66 +138,58 @@ fun SelectAppScreen(
                                     val scrollDelta =
                                         (dragAmount.y / size.height) * totalScrollableItems
                                     val newIndex =
-                                        (scrollState.firstVisibleItemIndex + scrollDelta.toInt()).coerceIn(
-                                            0,
-                                            totalScrollableItems
-                                        )
+                                        (scrollState.firstVisibleItemIndex + scrollDelta.toInt())
+                                            .coerceIn(0, totalScrollableItems)
                                     coroutineScope.launch {
                                         scrollState.scrollToItem(newIndex)
                                     }
                                 }
                             }
                     ) {
+                        val visibleListHeight =
+                            scrollState.layoutInfo.viewportEndOffset -
+                                    scrollState.layoutInfo.viewportStartOffset
+
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .fillMaxHeight()
-                                .background(Color.Transparent)
-                        ) {
-                            val visibleListHeight =
-                                scrollState.layoutInfo.viewportEndOffset - scrollState.layoutInfo.viewportStartOffset
-
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .graphicsLayer {
-                                        translationY =
-                                            scrollFraction * (visibleListHeight - visibleListHeight * thumbHeightFraction)
-                                    }
-                                    .fillMaxHeight(thumbHeightFraction)
-                                    .background(
-                                        color = Color.LightGray,
-                                        shape = RoundedCornerShape(6.dp)
-                                    )
-                            )
-                        }
+                                .graphicsLayer {
+                                    translationY = scrollFraction *
+                                            (visibleListHeight - visibleListHeight * thumbHeightFraction)
+                                }
+                                .fillMaxHeight(thumbHeightFraction)
+                                .background(
+                                    color = Color.Gray.copy(alpha = 0.4f),
+                                    shape = RoundedCornerShape(4.dp)
+                                )
+                        )
                     }
                 }
             }
-        }
 
-
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            SelectAllButton(
-                isAllSelected = uiState.isAllSelected,
-                onToggle = { viewModel.toggleSelectAll() },
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
-                    .padding(bottom = 8.dp, start = 8.dp, end = 8.dp)
-            )
+                    .padding(top = 8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                SelectAllButton(
+                    isAllSelected = uiState.isAllSelected,
+                    onToggle = { viewModel.toggleSelectAll() },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                )
 
-            SaveCancelButtons(
-                onSave = { onSave(uiState.selectedApps) },
-                onCancel = onCancel,
-                modifier = Modifier.fillMaxWidth()
-            )
+                SaveCancelButtons(
+                    onSave = { onSave(uiState.selectedApps) },
+                    onCancel = onCancel,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                )
+            }
         }
     }
 }
