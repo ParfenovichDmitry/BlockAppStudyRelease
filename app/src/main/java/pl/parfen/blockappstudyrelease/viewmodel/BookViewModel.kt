@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
+import androidx.core.content.edit
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +19,6 @@ import pl.parfen.blockappstudyrelease.R
 import pl.parfen.blockappstudyrelease.data.database.AppDatabase
 import pl.parfen.blockappstudyrelease.data.model.Book
 import pl.parfen.blockappstudyrelease.ui.books.*
-import androidx.core.content.edit
 
 class BookViewModel(
     @SuppressLint("StaticFieldLeak") private val context: Context,
@@ -29,7 +30,7 @@ class BookViewModel(
         private const val KEY_SHOW_ALL_BOOKS = "showAllBooks"
         private const val KEY_SECONDARY_LANGUAGE = "secondaryLanguage"
         private const val KEY_ACTIVE_BOOK = "activeBook"
-        private const val KEY_SCROLL_POSITION = "scrollPosition"
+        private const val KEY_SCROLL_POSITION_PREFIX = "scrollPosition_"
     }
 
     private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -57,9 +58,13 @@ class BookViewModel(
                 prefs.getString(KEY_ACTIVE_BOOK, "") ?: ""
             else AppDatabase.getDatabase(context).profileDao().getProfileById(profileId)?.activeBook ?: ""
 
-            val scrollPosition = if (profileId == -1)
-                prefs.getInt(KEY_SCROLL_POSITION, 0)
-            else 0
+            val scrollPosition = if (selectedBook.isNotEmpty()) {
+                val savedPosition = prefs.getInt("$KEY_SCROLL_POSITION_PREFIX$selectedBook", 0)
+                Log.d("BookRestore", "Restoring scroll position: $savedPosition for book: $selectedBook")
+                savedPosition
+            } else {
+                0
+            }
 
             val languageNames = context.resources.getStringArray(R.array.available_languages).toList()
             val filteredLanguages = languageNames.filter { it != primaryLanguage }
@@ -170,27 +175,37 @@ class BookViewModel(
         }
     }
 
-    fun saveScrollPosition(position: Int) {
-        prefs.edit() { putInt(KEY_SCROLL_POSITION, position) }
-        savedStateHandle["scrollPosition"] = position
+    fun saveScrollPosition(bookTitle: String, position: Int) {
+        prefs.edit {
+            putInt("$KEY_SCROLL_POSITION_PREFIX$bookTitle", position)
+        }
+        savedStateHandle["$KEY_SCROLL_POSITION_PREFIX$bookTitle"] = position
         _uiState.update { it.copy(scrollPosition = position) }
+        Log.d("BookSave", "Saved scroll position: $position for book: $bookTitle")
+    }
+
+    fun getScrollPosition(bookTitle: String): Int {
+        val position = prefs.getInt("$KEY_SCROLL_POSITION_PREFIX$bookTitle", 0)
+        Log.d("BookRestore", "Retrieved scroll position: $position for book: $bookTitle")
+        return position
     }
 
     fun selectBook(bookTitle: String) {
-        prefs.edit() { putString(KEY_ACTIVE_BOOK, bookTitle) }
+        prefs.edit { putString(KEY_ACTIVE_BOOK, bookTitle) }
         savedStateHandle["activeBook"] = bookTitle
-        _uiState.update { it.copy(selectedBookTitle = bookTitle) }
+        val scrollPosition = getScrollPosition(bookTitle)
+        _uiState.update { it.copy(selectedBookTitle = bookTitle, scrollPosition = scrollPosition) }
     }
 
     fun updateShowAllBooks(value: Boolean) {
-        prefs.edit() { putBoolean(KEY_SHOW_ALL_BOOKS, value) }
+        prefs.edit { putBoolean(KEY_SHOW_ALL_BOOKS, value) }
         savedStateHandle["showAllBooks"] = value
         _uiState.update { it.copy(showAllBooks = value) }
         loadBooks(_uiState.value.age, _uiState.value.primaryLanguage, _uiState.value.secondaryLanguage, value, _uiState.value.profileId == -1, _uiState.value.profileId)
     }
 
     fun updateSelectedAdditionalLanguage(language: String?) {
-        prefs.edit() { putString(KEY_SECONDARY_LANGUAGE, language) }
+        prefs.edit { putString(KEY_SECONDARY_LANGUAGE, language) }
         savedStateHandle["secondaryLanguage"] = language
         _uiState.update { it.copy(secondaryLanguage = language) }
         loadBooks(_uiState.value.age, _uiState.value.primaryLanguage, language, _uiState.value.showAllBooks, _uiState.value.profileId == -1, _uiState.value.profileId)
@@ -199,6 +214,8 @@ class BookViewModel(
     fun openPreview(context: Context, book: Book) {
         val intent = Intent(context, BookPreviewActivity::class.java).apply {
             putExtra("book", book)
+            putExtra("scrollPosition", getScrollPosition(book.title))
+            putExtra("profileId", _uiState.value.profileId)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         context.startActivity(intent)
@@ -206,7 +223,6 @@ class BookViewModel(
 
     fun saveChanges(profileId: Int, showAllBooks: Boolean, secondaryLanguage: String?, onSaveComplete: (Boolean, String?) -> Unit) {
         viewModelScope.launch {
-            saveScrollPosition(_uiState.value.scrollPosition)
             selectBook(_uiState.value.selectedBookTitle)
             updateShowAllBooks(showAllBooks)
             updateSelectedAdditionalLanguage(secondaryLanguage)
@@ -223,7 +239,8 @@ class BookViewModel(
     fun cancelChanges() {
         viewModelScope.launch {
             val keysToRemove = savedStateHandle.keys().filter {
-                it !in listOf("addedUserBooks", "showAllBooks", "secondaryLanguage", "activeBook", "scrollPosition")
+                it !in listOf("addedUserBooks", "showAllBooks", "secondaryLanguage", "activeBook") &&
+                        !it.startsWith(KEY_SCROLL_POSITION_PREFIX)
             }
             keysToRemove.forEach { savedStateHandle.remove<Any>(it) }
 
@@ -232,6 +249,26 @@ class BookViewModel(
                 _uiState.value.age,
                 _uiState.value.primaryLanguage
             )
+        }
+    }
+
+    private fun saveUiSettings(context: Context, profileId: Int, showAllBooks: Boolean, secondaryLanguage: String?) {
+        viewModelScope.launch {
+            try {
+                val profileDao = AppDatabase.getDatabase(context).profileDao()
+                val profile = profileDao.getProfileById(profileId)
+                profile?.let {
+                    profileDao.update(
+                        it.copy(
+                            showAllBooks = showAllBooks,
+                            additionalLanguage = secondaryLanguage,
+                            activeBook = _uiState.value.selectedBookTitle
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                Log.e("BookViewModel", "Error saving UI settings: ${e.message}")
+            }
         }
     }
 }

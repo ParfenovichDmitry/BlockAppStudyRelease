@@ -1,53 +1,65 @@
-package pl.parfen.blockappstudyrelease.data.datasource.remote
+package pl.parfen.blockappstudyrelease.domain
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import org.apache.poi.xwpf.usermodel.XWPFDocument
-import org.jsoup.Jsoup
+import android.text.Html
 import com.itextpdf.kernel.pdf.PdfDocument
 import com.itextpdf.kernel.pdf.PdfReader
 import com.itextpdf.kernel.pdf.canvas.parser.PdfTextExtractor
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import nl.siegmann.epublib.epub.EpubReader
+import org.apache.poi.xwpf.usermodel.XWPFDocument
 import java.io.*
-import java.util.zip.ZipInputStream
 
 object FileLoader {
 
-    private const val TAG = "FileLoader"
     private const val BUFFER_SIZE = 8192
+    private const val EXT_TXT = "txt"
+    private const val EXT_PDF = "pdf"
+    private const val EXT_EPUB = "epub"
+    private const val EXT_DOCX = "docx"
+    private const val WHITESPACE_REGEX = "\\s{3,}"
+    private const val WHITESPACE_REPLACEMENT = " "
 
-    suspend fun extractTextFromAssetsPart(context: Context, filePath: String, startLine: Int, linesToRead: Int): List<String> =
-        withContext(Dispatchers.IO) {
-            val lines = mutableListOf<String>()
-            try {
-                context.assets.open(filePath).use { inputStream ->
-                    BufferedReader(InputStreamReader(inputStream)).use { reader ->
-                        reader.lineSequence()
-                            .filter { it.isNotBlank() }
-                            .drop(startLine)
-                            .take(linesToRead)
-                            .forEach { line -> lines.add(line.replace(Regex("\\s{3,}"), " ")) }
-                    }
+    suspend fun extractTextFromAssetsPart(
+        context: Context,
+        filePath: String,
+        startLine: Int,
+        linesToRead: Int
+    ): List<String> = withContext(ioDispatcher) {
+        val lines = mutableListOf<String>()
+        try {
+            context.assets.open(filePath).use { inputStream ->
+                BufferedReader(InputStreamReader(inputStream)).use { reader ->
+                    reader.lineSequence()
+                        .filter { it.isNotBlank() }
+                        .drop(startLine)
+                        .take(linesToRead)
+                        .forEach { line -> lines.add(line.replace(Regex(WHITESPACE_REGEX), WHITESPACE_REPLACEMENT)) }
                 }
-            } catch (e: Exception) {
-                Log.e(TAG, "Error reading asset: ${e.message}")
-                lines.add("Error reading file: ${e.message}")
             }
-            lines
+        } catch (e: Exception) {
+            lines.add("Error reading file: ${e.message}")
         }
+        lines
+    }
 
-    suspend fun extractTextPart(context: Context, uri: Uri, ext: String, startLine: Int, linesToRead: Int): List<String> =
-        withContext(Dispatchers.IO) {
-            when (ext.lowercase()) {
-                "txt" -> readTxt(context, uri, startLine, linesToRead)
-                "epub" -> readEpub(context, uri, startLine, linesToRead)
-                "pdf" -> readPdf(context, uri, startLine, linesToRead)
-                "docx" -> readDocx(context, uri, startLine, linesToRead)
-                else -> listOf("Unsupported file format: $ext")
-            }
+    suspend fun extractTextPart(
+        context: Context,
+        uri: Uri,
+        ext: String,
+        startLine: Int,
+        linesToRead: Int
+    ): List<String> = withContext(ioDispatcher) {
+        when (ext.lowercase()) {
+            EXT_TXT -> readTxt(context, uri, startLine, linesToRead)
+            EXT_PDF -> readPdf(context, uri, startLine, linesToRead)
+            EXT_EPUB -> readEpub(context, uri, startLine, linesToRead)
+            EXT_DOCX -> readDocx(context, uri, startLine, linesToRead)
+            else -> listOf("Unsupported file format: $ext")
         }
+    }
 
     suspend fun countTotalLines(context: Context, uri: Uri, ext: String): Int =
         extractTextPart(context, uri, ext, 0, Int.MAX_VALUE).size
@@ -63,7 +75,7 @@ object FileLoader {
                     .filter { it.isNotBlank() }
                     .drop(start)
                     .take(limit)
-                    .forEach { line -> lines.add(line.replace(Regex("\\s{3,}"), " ")) }
+                    .forEach { line -> lines.add(line.replace(Regex(WHITESPACE_REGEX), WHITESPACE_REPLACEMENT)) }
             }
         }
         return lines
@@ -76,41 +88,41 @@ object FileLoader {
                 PdfDocument(reader).use { pdf ->
                     for (page in 1..pdf.numberOfPages) {
                         val text = PdfTextExtractor.getTextFromPage(pdf.getPage(page))
-                        text.split("\n")
+                        text.lines()
                             .map { it.trim() }
                             .filter { it.isNotEmpty() }
                             .forEach {
                                 if (lines.size >= start && lines.size < start + limit)
-                                    lines.add(it.replace(Regex("\\s{3,}"), " "))
+                                    lines.add(it.replace(Regex(WHITESPACE_REGEX), WHITESPACE_REPLACEMENT))
                             }
                         if (lines.size >= start + limit) break
                     }
                 }
             }
         }
-        return lines.drop(start).take(limit)
+        return lines
     }
 
     private fun readEpub(context: Context, uri: Uri, start: Int, limit: Int): List<String> {
         val lines = mutableListOf<String>()
-        var current = 0
         context.contentResolver.openInputStream(uri)?.use { input ->
-            ZipInputStream(BufferedInputStream(input)).use { zip ->
-                var entry = zip.nextEntry
-                while (entry != null && lines.size < limit) {
-                    if (entry.name.endsWith(".html") || entry.name.endsWith(".xhtml")) {
-                        val html = readZipEntry(zip)
-                        val doc = Jsoup.parse(html)
-                        doc.select("p, h1, h2, h3").map { it.text().trim() }
-                            .filter { it.isNotEmpty() }
-                            .forEach {
-                                if (current++ >= start && lines.size < limit)
-                                    lines.add(it.replace(Regex("\\s{3,}"), " "))
-                            }
+            val book = EpubReader().readEpub(input)
+            var counter = 0
+
+            for (resource in book.contents) {
+                val html = resource.reader.readText()
+                val text = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString()
+                val paragraphs = text.lines()
+                    .map { it.trim() }
+                    .filter { it.isNotEmpty() }
+
+                for (line in paragraphs) {
+                    if (counter++ >= start && lines.size < limit) {
+                        lines.add(line.replace(Regex(WHITESPACE_REGEX), WHITESPACE_REPLACEMENT))
                     }
-                    zip.closeEntry()
-                    entry = zip.nextEntry
+                    if (lines.size >= limit) break
                 }
+                if (lines.size >= limit) break
             }
         }
         return lines
@@ -124,19 +136,11 @@ object FileLoader {
                     .filter { it.isNotEmpty() }
                     .drop(start)
                     .take(limit)
-                    .forEach { lines.add(it.replace(Regex("\\s{3,}"), " ")) }
+                    .forEach { lines.add(it.replace(Regex(WHITESPACE_REGEX), WHITESPACE_REPLACEMENT)) }
             }
         }
         return lines
     }
 
-    private fun readZipEntry(zip: ZipInputStream): String {
-        val buffer = ByteArrayOutputStream()
-        val data = ByteArray(BUFFER_SIZE)
-        var count: Int
-        while (zip.read(data).also { count = it } != -1) {
-            buffer.write(data, 0, count)
-        }
-        return buffer.toString(Charsets.UTF_8.name())
-    }
+    private val ioDispatcher = Dispatchers.IO
 }

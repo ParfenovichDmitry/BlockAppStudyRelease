@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "pl.parfen.blockappstudyrelease"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -42,6 +42,11 @@ android {
     buildFeatures {
         compose = true
     }
+
+    configurations.all {
+        exclude(group = "xmlpull", module = "xmlpull")
+    }
+
 }
 
 dependencies {
@@ -73,6 +78,11 @@ dependencies {
     // GSON (JSON)
     implementation("com.google.code.gson:gson:2.10.1")
 
+
+
+
+
+
     // Coil (загрузка изображений)
     implementation("io.coil-kt:coil:2.5.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
@@ -81,16 +91,20 @@ dependencies {
     implementation("androidx.security:security-crypto:1.1.0-alpha07")
 
     // EPUB (Jsoup)
-    implementation("org.jsoup:jsoup:1.15.4")
+    implementation("com.positiondev.epublib:epublib-core:3.1")
 
     // PDF (iText для PDF файлов)
     implementation("com.itextpdf:kernel:7.2.5")
     implementation("com.itextpdf:io:7.2.5")
 
     // Apache POI для .doc и .docx файлов (через Android-адаптированный poi)
-    implementation("com.github.SUPERCILEX.poi-android:poi:3.17")
+    implementation("org.apache.poi:poi-ooxml:5.2.3")
+    implementation("org.apache.poi:poi-scratchpad:5.2.3")
 
-
+    implementation("org.apache.xmlbeans:xmlbeans:5.1.1")
+    implementation("org.apache.commons:commons-compress:1.21")
+    implementation("commons-io:commons-io:2.11.0")
+    implementation("org.apache.commons:commons-collections4:4.4")
 
     // Коррутины + Google Play Services
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.9.0-RC")
@@ -104,4 +118,3 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
-

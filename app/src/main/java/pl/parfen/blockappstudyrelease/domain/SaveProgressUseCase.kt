@@ -1,4 +1,4 @@
-package pl.parfen.blockappstudyrelease.domain.usecase
+package pl.parfen.blockappstudyrelease.domain
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

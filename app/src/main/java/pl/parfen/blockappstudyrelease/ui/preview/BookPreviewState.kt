@@ -11,5 +11,8 @@ data class BookPreviewState(
     val progressPercent: Int = 0,
     val currentPage: Int = 1,
     val totalPages: Int = 1,
-    val profileId: Int = -1
+    val profileId: Int = -1,
+    val scrollPosition: Int = 0,
+    val scrollOffset: Int = 0 // 👈 добавлено
 )
+

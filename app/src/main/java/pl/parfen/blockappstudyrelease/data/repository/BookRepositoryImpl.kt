@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.Uri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import pl.parfen.blockappstudyrelease.data.datasource.remote.FileLoader
+import pl.parfen.blockappstudyrelease.domain.FileLoader
 import pl.parfen.blockappstudyrelease.data.database.AppDatabase
 import pl.parfen.blockappstudyrelease.data.mapper.toBook
 import pl.parfen.blockappstudyrelease.data.model.Book

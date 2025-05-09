@@ -73,8 +73,8 @@ fun BookScreen(
     }
 
     LaunchedEffect(remember { derivedStateOf { listState.firstVisibleItemIndex } }) {
-        if (uiState.isProfileLoaded) {
-            viewModel.saveScrollPosition(listState.firstVisibleItemIndex)
+        if (uiState.isProfileLoaded && uiState.selectedBookTitle.isNotEmpty()) {
+            viewModel.saveScrollPosition(uiState.selectedBookTitle, listState.firstVisibleItemIndex)
         }
     }
 

@@ -11,7 +11,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") } // обязательно для poi-android и других библиотек JitPack
+        maven { url = uri("https://jitpack.io") }
+        jcenter()
     }
 }
 

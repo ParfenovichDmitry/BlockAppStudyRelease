@@ -98,6 +98,7 @@
     <string name="error_add_book">Failed to add book: %1$s</string>
     <string name="error_delete_book">Failed to delete book: %1$s</string>
     <string name="user_author">User</string>
+    <string name="ok_button" translatable="false">OK</string>
 
 
 
