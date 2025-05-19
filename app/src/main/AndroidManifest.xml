@@ -96,7 +96,12 @@
         <activity
             android:name=".SelectBookActivity"
             android:exported="true" />
-
+        <activity
+            android:name=".AIActivity"
+            android:exported="true" />
+        <activity
+            android:name=".TopicSelectionActivity"
+            android:exported="true" />
 
 
         <service

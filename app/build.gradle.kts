@@ -18,6 +18,16 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            "String",
+            "CHAT_GPT_API_KEY",
+            "\"${project.properties["OPENAI_API_KEY"]}\""
+        )
+    }
+
+    buildFeatures {
+        buildConfig = true // ← Вот это ключ
     }
 
     buildTypes {
@@ -108,6 +118,19 @@ dependencies {
 
     // Коррутины + Google Play Services
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.9.0-RC")
+
+    // Retrofit (HTTP client)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
+// Gson converter for JSON parsing
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+// OkHttp (логирование и сетевой стек)
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    implementation ("com.android.billingclient:billing-ktx:7.1.1")
+
 
     // Тестирование
     testImplementation(libs.junit)

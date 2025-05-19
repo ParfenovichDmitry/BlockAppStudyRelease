@@ -91,8 +91,25 @@
     <string name="error_delete_book">Błąd usuwania książki: %1$s</string>
     <string name="user_author">Użytkownik</string>
 
+    <string name="ai_example">Przykład</string>
+    <string name="no_result">Brak wyników</string>
+
+    <string name="break_into_syllables">Podziel na sylaby</string>
+    <string name="subscription_until">Subskrypcja do: %1$s</string>
+    <string name="free_attempts">Darmowe próby: %1$d</string>
+    <string name="subscribe_one_month">Subskrybuj na 1 miesiąc</string>
+    <string name="long_press_reset">(Długie naciśnięcie = reset)</string>
 
 
+    <string name="subscribe_dialog_title">Subskrypcja</string>
+    <string name="subscribe_dialog_message">Wykorzystałeś wszystkie darmowe próby. Subskrybuj, aby kontynuować.</string>
+    <string name="subscribe_button">Subskrybuj</string>
+
+    <string name="additional_language_label">Dodatkowy język</string>
+
+    <string name="topics_button_label">Tematy</string>
+    <string name="selected_topics_display">Wybrane tematy: %1$s</string>
+    <string name="subscription_required">Wymagana subskrypcja</string>
 
 
 

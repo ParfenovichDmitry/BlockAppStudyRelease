@@ -26,4 +26,21 @@
         <item>Your mother’s maiden name?</item>
     </string-array>
 
+
+    <string-array name="default_topics_en">
+        <item>Record-Breaking Animals</item>
+        <item>Inventions and Technologies</item>
+        <item>Archaeological Finds and Ancient Civilizations</item>
+        <item>Unusual Places on Earth</item>
+        <item>The World of Plants</item>
+    </string-array>
+
+    <string-array name="default_topics">
+        <item>Record-Breaking Animals</item>
+        <item>Inventions and Technologies</item>
+        <item>Archaeological Finds and Ancient Civilizations</item>
+        <item>Unusual Places on Earth</item>
+        <item>The World of Plants</item>
+    </string-array>
+
 </resources>

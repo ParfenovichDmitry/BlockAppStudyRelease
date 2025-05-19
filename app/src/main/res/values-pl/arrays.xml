@@ -25,4 +25,12 @@
         <item>Nazwisko panieńskie Twojej matki?</item>
     </string-array>
 
+    <string-array name="default_topics">
+        <item>Zwierzęta rekordziści</item>
+        <item>Wynalazki i technologie</item>
+        <item>Odkrycia archeologiczne i starożytne cywilizacje</item>
+        <item>Nietypowe miejsca na Ziemi</item>
+        <item>Świat roślin</item>
+    </string-array>
+
 </resources>

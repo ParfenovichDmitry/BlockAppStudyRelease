@@ -17,10 +17,10 @@ import androidx.compose.ui.platform.LocalContext
 
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import pl.parfen.blockappstudyrelease.AIActivity
 
 import pl.parfen.blockappstudyrelease.ProfilesActivity
 import pl.parfen.blockappstudyrelease.R
-import pl.parfen.blockappstudyrelease.SelectAIActivity
 import pl.parfen.blockappstudyrelease.SelectAppsActivity
 import pl.parfen.blockappstudyrelease.SelectBookActivity
 
@@ -116,7 +116,7 @@ fun CreateProfileScreen(viewModel: CreateProfileViewModel) {
         },
                 onAIClick = {
                     if (uiState.isAgeValid()) {
-                        val intent = Intent(context, SelectAIActivity::class.java).apply {
+                        val intent = Intent(context, AIActivity::class.java).apply {
                             putExtra("age", uiState.age.toIntOrNull() ?: 0)
                         }
                         selectAILauncher.launch(intent)

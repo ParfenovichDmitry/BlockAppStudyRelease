@@ -25,5 +25,13 @@
         <item>Mädchenname Ihrer Mutter?</item>
     </string-array>
 
+    <string-array name="default_topics">
+        <item>Rekordbrechende Tiere</item>
+        <item>Erfindungen und Technologien</item>
+        <item>Archäologische Funde und antike Zivilisationen</item>
+        <item>Ungewöhnliche Orte auf der Erde</item>
+        <item>Die Welt der Pflanzen</item>
+    </string-array>
+
 
 </resources>

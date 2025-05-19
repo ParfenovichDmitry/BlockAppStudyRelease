@@ -25,4 +25,13 @@
         <item>Девичья фамилия вашей матери?</item>
     </string-array>
 
+
+    <string-array name="default_topics">
+        <item>Животные-рекордсмены</item>
+        <item>Изобретения и технологии</item>
+        <item>Археология и древние цивилизации</item>
+        <item>Удивительные места</item>
+        <item>Мир растений</item>
+    </string-array>
+
 </resources>

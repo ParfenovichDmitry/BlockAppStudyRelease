@@ -93,6 +93,28 @@
     <string name="error_delete_book">Ошибка удаления книги: %1$s</string>
     <string name="user_author">Пользователь</string>
 
+    <string name="ai_example">Пример</string>
+    <string name="no_result">Нет результата</string>
+
+    <string name="break_into_syllables">Разбивать на слоги</string>
+    <string name="subscription_until">Подписка до: %1$s</string>
+    <string name="free_attempts">Бесплатных попыток: %1$d</string>
+    <string name="subscribe_one_month">Подписаться на 1 месяц</string>
+    <string name="long_press_reset">(Долгое нажатие = сброс)</string>
+
+    <string name="subscribe_dialog_title">Подписка</string>
+    <string name="subscribe_dialog_message">Вы использовали все бесплатные попытки. Подпишитесь, чтобы продолжить.</string>
+    <string name="subscribe_button">Подписаться</string>
+
+    <string name="additional_language_label">Дополнительный язык</string>
+    <string name="topics_button_label">Темы</string>
+    <string name="selected_topics_display">Выбранные темы: %1$s</string>
+    <string name="subscription_required">Требуется подписка</string>
+
+
+
+
+
 
 
 

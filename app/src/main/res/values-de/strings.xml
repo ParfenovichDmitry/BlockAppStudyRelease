@@ -90,6 +90,30 @@
     <string name="error_delete_book">Fehler beim Löschen des Buches: %1$s</string>
     <string name="user_author">Benutzer</string>
 
+    <string name="ai_example">Beispiel</string>
+    <string name="no_result">Kein Ergebnis</string>
+
+    <string name="break_into_syllables">In Silben aufteilen</string>
+    <string name="subscription_until">Abonnement bis: %1$s</string>
+    <string name="free_attempts">Kostenlose Versuche: %1$d</string>
+    <string name="subscribe_one_month">Für 1 Monat abonnieren</string>
+    <string name="long_press_reset">(Lang drücken = zurücksetzen)</string>
+
+    <string name="subscribe_dialog_title">Abonnement</string>
+    <string name="subscribe_dialog_message">Sie haben alle kostenlosen Versuche verwendet. Abonnieren Sie, um fortzufahren.</string>
+    <string name="subscribe_button">Abonnieren</string>
+
+    <string name="additional_language_label">Zusätzliche Sprache</string>
+
+    <string name="topics_button_label">Themen</string>
+    <string name="selected_topics_display">Ausgewählte Themen: %1$s</string>
+    <string name="subscription_required">Abonnement erforderlich</string>
+
+
+
+
+
+
 
 
 

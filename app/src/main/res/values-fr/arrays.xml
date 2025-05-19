@@ -26,4 +26,12 @@
         <item>Le nom de jeune fille de votre mère ?</item>
     </string-array>
 
+    <string-array name="default_topics">
+        <item>Animaux record du monde</item>
+        <item>Inventions et technologies</item>
+        <item>Découvertes archéologiques et civilisations anciennes</item>
+        <item>Endroits insolites sur Terre</item>
+        <item>Le monde des plantes</item>
+    </string-array>
+
 </resources>

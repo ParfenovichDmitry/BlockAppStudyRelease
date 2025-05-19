@@ -100,6 +100,28 @@
     <string name="user_author">User</string>
     <string name="ok_button" translatable="false">OK</string>
 
+    <string name="ai_example">Example</string>
+    <string name="no_result">No result</string>
+
+    <string name="break_into_syllables">Break into syllables</string>
+    <string name="subscription_until">Subscription until: %1$s</string>
+    <string name="free_attempts">Free attempts: %1$d</string>
+    <string name="subscribe_one_month">Subscribe for 1 month</string>
+    <string name="long_press_reset">(Long press = reset)</string>
+
+    <string name="subscribe_dialog_title">Subscribe</string>
+    <string name="subscribe_dialog_message">You have used all free attempts. Subscribe to continue.</string>
+    <string name="subscribe_button">Subscribe</string>
+    <string name="additional_language_label">Additional language</string>
+
+    <string name="topics_button_label">Topics</string>
+    <string name="selected_topics_display">Selected topics: %1$s</string>
+    <string name="subscription_required">Subscription required</string>
+
+
+
+
+
 
 
 

@@ -100,6 +100,28 @@
     <string name="error_delete_book">Erreur de suppression du livre : %1$s</string>
     <string name="user_author">Utilisateur</string>
 
+    <string name="ai_example">Exemple</string>
+    <string name="no_result">Aucun résultat</string>
+
+    <string name="break_into_syllables">Découper en syllabes</string>
+    <string name="subscription_until">Abonnement jusqu’au : %1$s</string>
+    <string name="free_attempts">Essais gratuits : %1$d</string>
+    <string name="subscribe_one_month">S’abonner pour 1 mois</string>
+    <string name="long_press_reset">(Appui long = réinitialiser)</string>
+
+    <string name="subscribe_dialog_title">Abonnement</string>
+    <string name="subscribe_dialog_message">Vous avez utilisé toutes les tentatives gratuites. Abonnez-vous pour continuer.</string>
+    <string name="subscribe_button">S\'abonner</string>
+
+    <string name="additional_language_label">Langue supplémentaire</string>
+
+    <string name="topics_button_label">Sujets</string>
+    <string name="selected_topics_display">Sujets sélectionnés : %1$s</string>
+    <string name="subscription_required">Abonnement requis</string>
+
+
+
+
 
 
 
