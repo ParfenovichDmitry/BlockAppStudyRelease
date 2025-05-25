@@ -11,19 +11,19 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import pl.parfen.blockappstudyrelease.R
 import pl.parfen.blockappstudyrelease.data.model.Profile
-import pl.parfen.blockappstudyrelease.ui.components.ConnectProfileButton
 import pl.parfen.blockappstudyrelease.ui.components.ImageButtonProf
 
 @Composable
 fun BottomButtons(
     selectedProfile: Profile?,
     activeProfileId: Int,
-    onConnectProfile: (Profile) -> Unit,
+    onConnectProfile: () -> Unit,
     onEditProfile: (Profile) -> Unit,
     onBack: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     var isEditPressed by remember { mutableStateOf(false) }
+    val isProfileActive = selectedProfile != null && selectedProfile.id == activeProfileId
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -35,12 +35,9 @@ fun BottomButtons(
                 .padding(bottom = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             ConnectProfileButton(
-                isProfileActive = activeProfileId != -1 && selectedProfile?.id == activeProfileId,
-                onClick = {
-                    selectedProfile?.let { onConnectProfile(it) }
-                },
+                isProfileActive = isProfileActive,
+                onClick = { if (selectedProfile != null) onConnectProfile() },
                 modifier = Modifier
                     .fillMaxWidth(0.8f)
                     .height(80.dp)

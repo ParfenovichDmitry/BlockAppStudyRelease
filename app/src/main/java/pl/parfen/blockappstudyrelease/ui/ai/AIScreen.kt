@@ -2,7 +2,6 @@ package pl.parfen.blockappstudyrelease.ui.ai
 
 import androidx.compose.runtime.Composable
 import pl.parfen.blockappstudyrelease.ui.ai.components.AIStateHandler
-import pl.parfen.blockappstudyrelease.ui.ai.components.Topic
 
 @Composable
 fun AIScreen(
@@ -14,8 +13,8 @@ fun AIScreen(
     aiTopics: List<String>,
     aiLanguage: String,
     selectedTopics: List<String>,
-    onTopicsUpdated: (List<Topic>, List<String>) -> Unit
-
+    onTopicsUpdated: (List<String>, List<String>) -> Unit,
+    onEditTopics: () -> Unit
 ) {
     AIStateHandler(
         profileId = profileId,
@@ -26,6 +25,7 @@ fun AIScreen(
         aiTopics = aiTopics,
         aiLanguage = aiLanguage,
         selectedTopics = selectedTopics,
-        onTopicsUpdated = onTopicsUpdated
+        onTopicsUpdated = onTopicsUpdated,
+        onEditTopics = onEditTopics
     )
 }

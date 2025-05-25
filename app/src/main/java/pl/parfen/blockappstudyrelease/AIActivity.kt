@@ -1,66 +1,80 @@
 package pl.parfen.blockappstudyrelease
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.Composable
 import pl.parfen.blockappstudyrelease.ui.ai.AIScreen
-import pl.parfen.blockappstudyrelease.ui.ai.components.Topic
-import java.util.*
 
 class AIActivity : BaseActivity() {
 
-    private lateinit var updateTopics: (List<Topic>, List<String>) -> Unit
+    private val REQUEST_CODE_TOPIC_SELECTION = 1234
+    private var selectedTopics: ArrayList<String> = arrayListOf()
+    private var allTopics: List<String> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        allTopics = getAllTopics()
+        setContent { RenderScreen() }
+    }
 
-        val sharedPrefs = getSharedPreferences("app_settings", MODE_PRIVATE)
-        val savedLanguage = sharedPrefs.getString("selected_language", "en") ?: "en"
+    private fun getAllTopics(): List<String> {
+        val prefs = getSharedPreferences("user_topics", MODE_PRIVATE)
+        val userTopics = prefs.getStringSet("user_topics", emptySet())?.toList() ?: emptyList()
+        val defaultTopics = resources.getStringArray(R.array.default_topics).toList()
+        return (defaultTopics + userTopics).distinct()
+    }
 
-        val profileId = intent.getIntExtra("profile_id", -1)
-        val age = intent.getIntExtra("age", 6).toString()
-        val appLanguage = intent.getStringExtra("app_language") ?: savedLanguage
-        val additionalLanguage = intent.getStringExtra("additionalLanguage")
-        val aiNetwork = intent.getStringExtra("aiNetwork") ?: "ChatGPT"
-        var initialTopics = intent.getStringArrayListExtra("aiTopics") ?: emptyList()
-        val aiLanguage = intent.getStringExtra("aiLanguage") ?: appLanguage
-        val initialSelectedTopics = intent.getStringArrayListExtra("selectedTopics") ?: emptyList()
+    private fun getAppLanguage(): String {
+        val prefs = getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+        return prefs.getString("selected_language", "ru") ?: "ru"
+    }
 
-        if (initialTopics.isEmpty()) {
-            val locale = Locale(appLanguage)
-            val config = resources.configuration
-            config.setLocale(locale)
-            val localizedContext = createConfigurationContext(config)
-            val fallbackTopics = localizedContext.resources.getStringArray(R.array.default_topics).toList()
-            initialTopics = fallbackTopics
-        }
-
-        setContent {
-            updateTopics = { newTopics, newSelectedTopics ->
-
+    @Composable
+    private fun RenderScreen() {
+        val appLanguage = getAppLanguage()
+        AIScreen(
+            profileId = intent.getIntExtra("profileId", -1),
+            age = getAgeString(),
+            appLanguage = appLanguage,
+            additionalLanguage = intent.getStringExtra("additionalLanguage"),
+            aiNetwork = intent.getStringExtra("aiNetwork") ?: "",
+            aiTopics = allTopics,
+            aiLanguage = appLanguage,
+            selectedTopics = selectedTopics,
+            onTopicsUpdated = { updatedTopics, selected ->
+                selectedTopics = ArrayList(selected)
+                allTopics = getAllTopics()
+                setContent { RenderScreen() }
+            },
+            onEditTopics = {
+                openTopicSelection()
             }
+        )
+    }
 
-            AIScreen(
-                profileId = profileId,
-                age = age,
-                appLanguage = appLanguage,
-                additionalLanguage = additionalLanguage,
-                aiNetwork = aiNetwork,
-                aiTopics = initialTopics,
-                aiLanguage = aiLanguage,
-                selectedTopics = initialSelectedTopics,
-                onTopicsUpdated = updateTopics
-            )
-        }
+    private fun getAgeString(): String {
+
+        val ageExtra = intent.getStringExtra("age")
+        if (ageExtra != null) return ageExtra
+        val ageInt = intent.getIntExtra("age", -1)
+        return if (ageInt != -1) ageInt.toString() else ""
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
-            val updatedTopics = data?.getStringArrayListExtra("currentTopics") ?: emptyList()
-            val selectedTopics = data?.getStringArrayListExtra("selectedTopics") ?: emptyList()
-
+        if (requestCode == REQUEST_CODE_TOPIC_SELECTION && resultCode == RESULT_OK) {
+            val newTopics = data?.getStringArrayListExtra("currentTopics") ?: arrayListOf()
+            allTopics = newTopics
+            selectedTopics = ArrayList()
+            setContent { RenderScreen() }
         }
+    }
+
+    fun openTopicSelection() {
+        val intent = Intent(this, TopicSelectionActivity::class.java)
+        startActivityForResult(intent, REQUEST_CODE_TOPIC_SELECTION)
     }
 }

@@ -118,6 +118,15 @@
     <string name="topics_button_label">Sujets</string>
     <string name="selected_topics_display">Sujets sélectionnés : %1$s</string>
     <string name="subscription_required">Abonnement requis</string>
+    <string name="topic_input_label">Ajouter un nouveau sujet</string>
+    <string name="topic_add_button">Ajouter</string>
+    <string name="topic_deleted_message">Le sujet “%1$s” a été supprimé</string>
+    <string name="topic_selection_title">Sélection des sujets</string>
+    <string name="all_topics">Tous les sujets</string>
+
+    <string name="monitoring_service_notification">Surveillance de l’utilisation des applications…</string>
+    <string name="monitoring_service_channel_name">Service de surveillance</string>
+
 
 
 

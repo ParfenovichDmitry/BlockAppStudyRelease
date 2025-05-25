@@ -110,6 +110,14 @@
     <string name="topics_button_label">Темы</string>
     <string name="selected_topics_display">Выбранные темы: %1$s</string>
     <string name="subscription_required">Требуется подписка</string>
+    <string name="topic_input_label">Добавить новую тему</string>
+    <string name="topic_add_button">Добавить</string>
+    <string name="topic_deleted_message">Тема “%1$s” удалена</string>
+    <string name="topic_selection_title">Выбор тем</string>
+    <string name="all_topics">Все темы</string>
+
+    <string name="monitoring_service_notification">Мониторинг использования приложений…</string>
+    <string name="monitoring_service_channel_name">Служба мониторинга</string>
 
 
 

@@ -108,6 +108,14 @@
     <string name="topics_button_label">Themen</string>
     <string name="selected_topics_display">Ausgewählte Themen: %1$s</string>
     <string name="subscription_required">Abonnement erforderlich</string>
+    <string name="topic_input_label">Neues Thema hinzufügen</string>
+    <string name="topic_add_button">Hinzufügen</string>
+    <string name="topic_deleted_message">Thema „%1$s“ wurde gelöscht</string>
+    <string name="topic_selection_title">Themenauswahl</string>
+    <string name="all_topics">Alle Themen</string>
+
+    <string name="monitoring_service_notification">Überwachung der App-Nutzung…</string>
+    <string name="monitoring_service_channel_name">Überwachungsdienst</string>
 
 
 

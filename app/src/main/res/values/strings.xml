@@ -117,6 +117,14 @@
     <string name="topics_button_label">Topics</string>
     <string name="selected_topics_display">Selected topics: %1$s</string>
     <string name="subscription_required">Subscription required</string>
+    <string name="topic_input_label">Add new topic</string>
+    <string name="topic_add_button">Add</string>
+    <string name="topic_deleted_message">Topic “%1$s” has been deleted</string>
+    <string name="topic_selection_title">Topic Selection</string>
+    <string name="all_topics">All topics</string>
+
+    <string name="monitoring_service_notification">Monitoring app usage...</string>
+    <string name="monitoring_service_channel_name">Monitoring Service</string>
 
 
 

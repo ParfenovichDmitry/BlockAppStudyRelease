@@ -5,8 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import pl.parfen.blockappstudyrelease.data.database.dao.BookProgressDao
 import pl.parfen.blockappstudyrelease.data.database.dao.BookDao
+import pl.parfen.blockappstudyrelease.data.database.dao.BookProgressDao
+
+import pl.parfen.blockappstudyrelease.data.local.dao.UsageLogDao
 import pl.parfen.blockappstudyrelease.data.model.BookEntity
 import pl.parfen.blockappstudyrelease.data.model.BookProgress
 import pl.parfen.blockappstudyrelease.data.model.Profile
@@ -21,15 +23,15 @@ import pl.parfen.blockappstudyrelease.data.model.UsageLog
         BookEntity::class
     ],
     version = 1,
-    exportSchema = true
+    exportSchema = false
 )
 @TypeConverters(ProfileTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun profileDao(): ProfileDao
     abstract fun bookProgressDao(): BookProgressDao
-
     abstract fun bookDao(): BookDao
+    abstract fun usageLogDao(): UsageLogDao
 
     companion object {
         @Volatile

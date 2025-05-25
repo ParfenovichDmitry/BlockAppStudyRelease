@@ -12,7 +12,8 @@ fun AIScreenWrapper(
     aiTopics: List<String>,
     aiLanguage: String,
     selectedTopics: List<String> = emptyList(),
-    onTopicsUpdated: (List<Topic>, List<String>) -> Unit = { _, _ -> }
+    onTopicsUpdated: (List<String>, List<String>) -> Unit = { _, _ -> },
+    onEditTopics: () -> Unit = {}
 ) {
     AIStateHandler(
         profileId = profileId,
@@ -23,6 +24,7 @@ fun AIScreenWrapper(
         aiTopics = aiTopics,
         aiLanguage = aiLanguage,
         selectedTopics = selectedTopics,
-        onTopicsUpdated = onTopicsUpdated
+        onTopicsUpdated = onTopicsUpdated,
+        onEditTopics = onEditTopics
     )
 }
