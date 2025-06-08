@@ -46,19 +46,19 @@ class AIViewModel(
                             Locale.getDefault().language
                         }
 
-                        val topic = if (event.selectedTopics.isNotEmpty()) {
-                            event.selectedTopics[random.nextInt(event.selectedTopics.size)]
+                        val topicsList = if (event.selectedTopics.isNotEmpty()) {
+                            event.selectedTopics
                         } else {
                             val fallback = context.resources.getStringArray(
                                 context.resources.getIdentifier("default_topics", "array", context.packageName)
                             )
-                            fallback[random.nextInt(fallback.size)]
+                            fallback.toList()
                         }
 
                         val prompt = HelpMethods.createPrompt(
                             context = context,
                             age = event.age,
-                            topic = topic,
+                            topics = topicsList,
                             languageCode = targetLang,
                             languageCodes = listOf(Locale.getDefault().language, targetLang),
                             breakIntoSyllables = event.breakIntoSyllables

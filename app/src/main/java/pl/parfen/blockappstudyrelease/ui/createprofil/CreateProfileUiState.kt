@@ -1,9 +1,10 @@
 package pl.parfen.blockappstudyrelease.viewmodel
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.net.Uri
 import pl.parfen.blockappstudyrelease.data.model.BookProgress
 import pl.parfen.blockappstudyrelease.data.model.Profile
-
 
 data class CreateProfileUiState(
     val avatarUri: Uri? = null,
@@ -23,9 +24,9 @@ data class CreateProfileUiState(
     val additionalLanguage: String? = null,
     val selectedTopics: List<String> = emptyList(),
     val totalWordsRead: Int = 0,
-    val profileLanguage: String = HelpMethods.getSystemLanguage(),
+    val profileLanguage: String = "en", // <- дефолт, но будет переопределён
     val bookProgress: List<BookProgress> = emptyList(),
-    val showAgeValidationAlert: Boolean = false // <-- добавлено!
+    val showAgeValidationAlert: Boolean = false
 ) {
     fun toProfile(profileId: Int): Profile {
         return Profile(
@@ -53,5 +54,13 @@ data class CreateProfileUiState(
 
     fun isAgeValid(): Boolean {
         return age.toIntOrNull()?.let { it in 6..15 } ?: false
+    }
+
+    companion object {
+        fun fromContext(context: Context): CreateProfileUiState {
+            val prefs: SharedPreferences = context.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+            val lang = prefs.getString("selected_language", "en") ?: "en"
+            return CreateProfileUiState(profileLanguage = lang)
+        }
     }
 }

@@ -1,19 +1,11 @@
 package pl.parfen.blockappstudyrelease.data.database
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
+import androidx.room.*
 import pl.parfen.blockappstudyrelease.data.database.dao.BookDao
 import pl.parfen.blockappstudyrelease.data.database.dao.BookProgressDao
-
 import pl.parfen.blockappstudyrelease.data.local.dao.UsageLogDao
-import pl.parfen.blockappstudyrelease.data.model.BookEntity
-import pl.parfen.blockappstudyrelease.data.model.BookProgress
-import pl.parfen.blockappstudyrelease.data.model.Profile
-import pl.parfen.blockappstudyrelease.data.model.ProfileTypeConverters
-import pl.parfen.blockappstudyrelease.data.model.UsageLog
+import pl.parfen.blockappstudyrelease.data.model.*
 
 @Database(
     entities = [
@@ -22,8 +14,8 @@ import pl.parfen.blockappstudyrelease.data.model.UsageLog
         UsageLog::class,
         BookEntity::class
     ],
-    version = 1,
-    exportSchema = false
+    version = 3,
+    exportSchema = true
 )
 @TypeConverters(ProfileTypeConverters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -43,7 +35,10 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "app_database"
-                ).build()
+                )
+
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }

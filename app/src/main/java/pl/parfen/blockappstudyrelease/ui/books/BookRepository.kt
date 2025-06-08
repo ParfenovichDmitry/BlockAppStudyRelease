@@ -105,7 +105,12 @@ object BookRepository {
         val normSecondary = secondaryLanguage?.lowercase()
 
         val systemBooks = rawBooks.filter { book ->
-            val langMatch = book.language.lowercase() == normPrimary || (normSecondary != null && book.language.lowercase() == normSecondary)
+            val bookLang = book.language.lowercase()
+            val langMatch = bookLang == normPrimary ||
+                    (normSecondary != null && (
+                            (normSecondary == "*" && bookLang != normPrimary) ||
+                                    (normSecondary != "*" && bookLang == normSecondary)
+                            ))
             val ageMatch = if (showAllBooks) true else isAgeInRange(book.ageGroup, ageInt)
             langMatch && ageMatch
         }.map { book ->

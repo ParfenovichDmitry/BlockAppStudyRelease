@@ -4,19 +4,37 @@ import android.content.Context
 import android.net.Uri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import pl.parfen.blockappstudyrelease.domain.FileLoader
 import pl.parfen.blockappstudyrelease.data.database.AppDatabase
-import pl.parfen.blockappstudyrelease.data.mapper.toBook
 import pl.parfen.blockappstudyrelease.data.model.Book
 import pl.parfen.blockappstudyrelease.data.model.BookProgress
 import pl.parfen.blockappstudyrelease.data.model.StorageType
+import pl.parfen.blockappstudyrelease.data.repository.blockapp.ProfileRepository
+import pl.parfen.blockappstudyrelease.domain.FileLoader
+import pl.parfen.blockappstudyrelease.ui.books.BookRepository as JsonBookRepository
 import java.io.File
 
 class BookRepositoryImpl(private val context: Context) {
 
-    suspend fun getSystemBooks(): List<Book> = withContext(Dispatchers.IO) {
-        val db = AppDatabase.getDatabase(context)
-        db.bookDao().getAllSystemBooks().map { it.toBook() }  // конвертация BookEntity -> Book
+    private val profileRepository = ProfileRepository(context)
+
+    suspend fun getSystemBooks(profileId: Int): List<Book> = withContext(Dispatchers.IO) {
+        val profile = profileRepository.getProfileById(profileId)
+        if (profile == null) return@withContext emptyList()
+
+        val age = profile.age.toString()
+        val lang = profile.profileLanguage.ifBlank { "pl" }
+        val secondaryLang = profile.additionalLanguage ?: "*"
+        val showAll = profile.showAllBooks
+
+        JsonBookRepository.getAllBooks(
+            context = context,
+            age = age,
+            primaryLanguage = lang,
+            secondaryLanguage = secondaryLang,
+            showAllBooks = showAll,
+            includeUserBooks = false,
+            profileId = profileId
+        ).filter { !it.isUserBook }
     }
 
     suspend fun getUserBooks(profileId: Int): List<Book> = withContext(Dispatchers.IO) {
@@ -75,6 +93,7 @@ class BookRepositoryImpl(private val context: Context) {
     private fun getExtension(filePath: String): String {
         return filePath.substringAfterLast('.', "").lowercase()
     }
+
     suspend fun saveProgress(profileId: Int, book: Book, progressPercent: Float) {
         val db = AppDatabase.getDatabase(context)
         val progressDao = db.bookProgressDao()
@@ -108,13 +127,21 @@ class BookRepositoryImpl(private val context: Context) {
             )
         }
     }
-    suspend fun getNextSystemBook(currentBook: Book): Book? {
-        val systemBooks = getSystemBooks()
+
+    suspend fun getNextSystemBook(currentBook: Book, profileId: Int, selectedBook: Book? = null): Book? {
+        val systemBooks = getSystemBooks(profileId)
+        if (systemBooks.isEmpty()) return null
+
         val currentIndex = systemBooks.indexOfFirst { it.id == currentBook.id }
-        return if (currentIndex != -1 && currentIndex + 1 < systemBooks.size) {
-            systemBooks[currentIndex + 1]
-        } else {
-            null
-        }
+        val selectedIndex = selectedBook?.let { systemBooks.indexOfFirst { b -> b.id == it.id } } ?: 0
+
+        if (currentIndex == -1) return systemBooks.firstOrNull()
+
+        var nextIndex = currentIndex + 1
+        if (nextIndex >= systemBooks.size) nextIndex = 0
+
+        val nextBook = systemBooks[nextIndex]
+
+        return if (selectedBook != null && nextBook.id == selectedBook.id) null else nextBook
     }
 }

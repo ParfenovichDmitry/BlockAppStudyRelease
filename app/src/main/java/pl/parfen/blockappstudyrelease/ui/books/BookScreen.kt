@@ -238,7 +238,9 @@ fun BookScreen(
                             onSaveComplete = onSave
                         )
                     },
-                    modifier = Modifier.weight(1f).padding(end = 8.dp)
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp)
                 )
 
                 ImageButton(
@@ -249,7 +251,9 @@ fun BookScreen(
                         viewModel.cancelChanges()
                         onCancel()
                     },
-                    modifier = Modifier.weight(1f).padding(start = 8.dp)
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = 8.dp)
                 )
             }
         }

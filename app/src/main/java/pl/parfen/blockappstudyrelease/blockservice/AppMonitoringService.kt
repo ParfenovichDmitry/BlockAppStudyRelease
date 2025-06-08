@@ -1,16 +1,16 @@
 package pl.parfen.blockappstudyrelease.blockservice
 
+import android.annotation.SuppressLint
 import android.app.*
+import android.app.usage.UsageEvents
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
 import android.os.*
 import android.provider.Settings
+import android.util.Log
 import androidx.core.app.NotificationCompat
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import pl.parfen.blockappstudyrelease.BlockedAppActivity
 import pl.parfen.blockappstudyrelease.MainActivity
 import pl.parfen.blockappstudyrelease.R
@@ -19,13 +19,13 @@ import pl.parfen.blockappstudyrelease.data.model.Profile
 import java.util.concurrent.atomic.AtomicBoolean
 
 class AppMonitoringService : Service() {
+
     companion object {
         private const val CHANNEL_ID = "monitoring_channel"
         private const val MONITOR_INTERVAL_MS = 5000L
     }
 
     private val isBlockActive = AtomicBoolean(false)
-    private var blockedApp: String? = null
     private var blockedAppTimes = mutableMapOf<String, Long>()
     private var lastCheckTime = mutableMapOf<String, Long>()
     private var blockedApps: List<String>? = null
@@ -40,14 +40,18 @@ class AppMonitoringService : Service() {
         super.onCreate()
         createNotificationChannel()
         db = AppDatabase.getDatabase(this)
+        Log.d("AppMonitoringService", "Service created")
     }
 
+    @SuppressLint("ForegroundServiceType")
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.d("AppMonitoringService", "Service started")
         if (intent?.action == "BLOCK_ACTIVITY_CLOSED") {
-            clearBlockState()
+            isBlockActive.set(false)
             handler.post(monitoringRunnable)
             return START_STICKY
         }
+
         if (!serviceStarted) {
             serviceStarted = true
             startForeground(1, createForegroundNotification())
@@ -57,7 +61,9 @@ class AppMonitoringService : Service() {
     }
 
     private fun checkPermissionsAndLoadData(intent: Intent?) {
+        Log.d("AppMonitoringService", "Checking permissions")
         if (!checkPermissions()) {
+            Log.d("AppMonitoringService", "Missing permissions")
             val mainIntent = Intent(this, MainActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
@@ -65,22 +71,18 @@ class AppMonitoringService : Service() {
             stopSelf()
             return
         }
-        if (intent != null && intent.hasExtra("ACTIVE_PROFILE_ID")) {
-            val profileId = intent.getIntExtra("ACTIVE_PROFILE_ID", -1)
-            if (profileId != -1) {
-                loadProfileData(profileId)
-            } else {
-                stopSelf()
-            }
+
+        val profileId = intent?.getIntExtra("ACTIVE_PROFILE_ID", -1) ?: -1
+        Log.d("AppMonitoringService", "Received profile ID: $profileId")
+        if (profileId != -1) {
+            loadProfileData(profileId)
         } else {
             stopSelf()
         }
     }
 
     private fun checkPermissions(): Boolean {
-        val usagePermission = hasUsageStatsPermission()
-        val overlayPermission = isOverlayPermissionGranted()
-        return usagePermission && overlayPermission
+        return hasUsageStatsPermission() && isOverlayPermissionGranted()
     }
 
     private fun hasUsageStatsPermission(): Boolean {
@@ -91,7 +93,7 @@ class AppMonitoringService : Service() {
             @Suppress("DEPRECATION")
             appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(), packageName)
         }
-        return mode == android.app.AppOpsManager.MODE_ALLOWED
+        return mode == AppOpsManager.MODE_ALLOWED
     }
 
     private fun isOverlayPermissionGranted(): Boolean {
@@ -105,6 +107,7 @@ class AppMonitoringService : Service() {
                 activeProfile = profile
                 blockedApps = profile.blockedApps
                 maxUsageTimeMs = profile.usageTime * 60_000L
+                Log.d("AppMonitoringService", "Loaded profile: $profileId, blockedApps: $blockedApps, timeLimit: $maxUsageTimeMs ms")
                 withContext(Dispatchers.Main) {
                     handler.post(monitoringRunnable)
                 }
@@ -123,53 +126,72 @@ class AppMonitoringService : Service() {
 
     private fun checkRunningApps() {
         val foregroundApp = getForegroundApp()
+        Log.v("AppMonitoringService", "Detected via queryUsageStats: $foregroundApp")
+        Log.d("AppMonitoringService", "Foreground app: $foregroundApp")
         if (foregroundApp == null) return
 
-        if (isBlockActive.get() && blockedApps?.contains(foregroundApp) == true) {
-            showBlockScreen(blockedApp ?: foregroundApp, activeProfile?.id ?: -1)
-            return
-        }
-
         if (lastForegroundApp != foregroundApp) {
+            Log.d("AppMonitoringService", "App changed from $lastForegroundApp to $foregroundApp")
             lastForegroundApp = foregroundApp
         }
 
-        if (blockedApps?.contains(foregroundApp) == true) {
-            val now = System.currentTimeMillis()
-            val lastTime = lastCheckTime[foregroundApp] ?: now
-            val elapsed = now - lastTime
-            lastCheckTime[foregroundApp] = now
-            blockedAppTimes[foregroundApp] = (blockedAppTimes[foregroundApp] ?: 0) + elapsed
+        val now = System.currentTimeMillis()
+        val lastTime = lastCheckTime[foregroundApp] ?: now
+        val elapsed = now - lastTime
+        lastCheckTime[foregroundApp] = now
 
-            if ((blockedAppTimes[foregroundApp] ?: 0) >= maxUsageTimeMs && isBlockActive.compareAndSet(false, true)) {
-                blockedApp = foregroundApp
-                showBlockScreen(foregroundApp, activeProfile?.id ?: -1)
-            }
+        if (blockedApps?.contains(foregroundApp) == true) {
+            blockedAppTimes[foregroundApp] = (blockedAppTimes[foregroundApp] ?: 0) + elapsed
+        }
+
+        val totalBlockedTime = blockedAppTimes.filterKeys { blockedApps?.contains(it) == true }
+            .values.sum()
+
+        Log.d("AppMonitoringService", "App $foregroundApp used for $elapsed ms (total: ${blockedAppTimes[foregroundApp] ?: 0} ms)")
+        Log.d("AppMonitoringService", "Total blocked usage time across apps: $totalBlockedTime ms")
+
+        if (totalBlockedTime >= maxUsageTimeMs && isBlockActive.compareAndSet(false, true)) {
+            Log.d("AppMonitoringService", "Total usage limit exceeded, launching BlockedAppActivity")
+
+            val selectedBook = getSharedPreferences("book_settings", MODE_PRIVATE)
+                .getString("activeBook", "") ?: ""
+            Log.d("AppMonitoringService", "Selected book from SharedPreferences: $selectedBook")
+
+            showBlockScreen(foregroundApp, activeProfile?.id ?: -1, selectedBook)
         }
     }
 
     private fun getForegroundApp(): String? {
         val usm = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
         val time = System.currentTimeMillis()
-        val stats = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, time - 10000, time)
+
+        val stats = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY, time - 30_000, time)
         val mostRecent = stats?.maxByOrNull { it.lastTimeUsed }
-        return mostRecent?.packageName
+        if (mostRecent?.lastTimeUsed ?: 0 > 0) {
+            return mostRecent?.packageName
+        }
+
+        val events = usm.queryEvents(time - 30_000, time)
+        val event = UsageEvents.Event()
+        var lastApp: String? = null
+        while (events.hasNextEvent()) {
+            events.getNextEvent(event)
+            if (event.eventType == UsageEvents.Event.MOVE_TO_FOREGROUND) {
+                lastApp = event.packageName
+            }
+        }
+        return lastApp
     }
 
-    private fun showBlockScreen(packageName: String, profileId: Int) {
+    private fun showBlockScreen(packageName: String, profileId: Int, selectedBookTitle: String?) {
         val intent = Intent(this, BlockedAppActivity::class.java).apply {
             putExtra("BLOCKED_APP", packageName)
             putExtra("PROFILE_ID", profileId)
+            putExtra("SELECTED_BOOK_TITLE", selectedBookTitle ?: "")
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         }
+        Log.d("AppMonitoringService", "Launching BlockedAppActivity for $packageName with selectedBookTitle=$selectedBookTitle")
         startActivity(intent)
-    }
-
-    private fun clearBlockState() {
-        isBlockActive.set(false)
-        blockedApp = null
-        blockedAppTimes.clear()
-        lastCheckTime.clear()
     }
 
     private fun createNotificationChannel() {

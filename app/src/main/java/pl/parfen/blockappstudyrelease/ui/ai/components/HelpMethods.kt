@@ -9,7 +9,6 @@ import java.util.Locale
 
 object HelpMethods {
 
-
     fun getSystemLanguage(): String {
         return Locale.getDefault().language
     }
@@ -61,6 +60,13 @@ object HelpMethods {
         return mapping
     }
 
+    fun getTopicsForLanguage(context: Context, langCode: String): List<String> {
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(Locale(langCode))
+        val localizedContext = context.createConfigurationContext(config)
+        return localizedContext.resources.getStringArray(R.array.default_topics).toList()
+    }
+
     fun mapTopicToEnglish(context: Context, topic: String, languageCodes: List<String>): String {
         val mapping = createTopicMapping(context, languageCodes)
         val normalizedTopic = normalizeTopic(topic)
@@ -70,13 +76,14 @@ object HelpMethods {
     fun createPrompt(
         context: Context,
         age: String,
-        topic: String,
+        topics: List<String>,
         languageCode: String,
         languageCodes: List<String>,
         breakIntoSyllables: Boolean = false
     ): String {
         val (minWords, maxWords) = getWordCountRangeForAge(age)
         val ageInt = age.toIntOrNull() ?: 6
+        val topic = topics.randomOrNull() ?: "Edukacja"
 
         val languageName = when (languageCode.lowercase()) {
             "pl" -> "Polish"
@@ -104,11 +111,9 @@ object HelpMethods {
             """.trimIndent()
         } else ""
 
-
-
         return if (ageInt <= 8) {
             """
-            Write a fairy-tale style educational story in $languageName on the topic "$topic".
+            Write a fairy-tale style educational story in $languageName on the topic \"$topic\".
             The story must include real and age-appropriate factual information, but be told in a magical or imaginative way suitable for a $ageInt-year-old child.
             Start with $exampleStart
             Use simple vocabulary, friendly tone, and characters (like animals, children, or magical guides) to introduce real facts.
@@ -118,7 +123,7 @@ object HelpMethods {
             """.trimIndent()
         } else {
             """
-            Write an informative and engaging text in $languageName on the topic "$topic".
+            Write an informative and engaging text in $languageName on the topic \"$topic\".
             Present real, age-appropriate facts in a way that sparks curiosity and imagination in a $ageInt-year-old child.
             Use clear and simple language, examples, and comparisons suitable for this age group.
             The text should contain between $minWords and $maxWords words.

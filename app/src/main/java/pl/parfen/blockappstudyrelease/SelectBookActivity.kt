@@ -23,14 +23,13 @@ class SelectBookActivity : BaseActivity() {
 
                 val prefs = getSharedPreferences("book_settings", MODE_PRIVATE)
                 prefs.edit().putString("activeBook", bookTitle).putInt("scrollPosition", scrollPosition).apply()
-
-                // Можно сразу вызвать ViewModel для обновления UI
             }
         }
 
         val profileId = intent.getIntExtra("profile_id", -1)
         val age = intent.getIntExtra("age", -1).takeIf { it != -1 }?.toString() ?: "?"
-        val language = getSharedPreferences("app_settings", MODE_PRIVATE).getString("selected_language", "en") ?: "en"
+        val language = getSharedPreferences("app_settings", MODE_PRIVATE)
+            .getString("selected_language", getSystemLocale()) ?: getSystemLocale()
 
         setContent {
             BlockAppStudyReleaseTheme {
@@ -61,4 +60,8 @@ class SelectBookActivity : BaseActivity() {
         }
     }
 
+    private fun getSystemLocale(): String {
+        val locale = resources.configuration.locales.get(0)
+        return locale.language
+    }
 }

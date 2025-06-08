@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import pl.parfen.blockappstudyrelease.data.model.Book
 import pl.parfen.blockappstudyrelease.domain.LoadBookLinesUseCase
 import pl.parfen.blockappstudyrelease.domain.SaveProgressUseCase
-import pl.parfen.blockappstudyrelease.domain.usecase.GetNextBookUseCase
+import pl.parfen.blockappstudyrelease.domain.GetNextBookUseCase
 
 import pl.parfen.blockappstudyrelease.ui.preview.BookPreviewState
 

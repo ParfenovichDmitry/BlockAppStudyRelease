@@ -1,162 +1,169 @@
 package pl.parfen.blockappstudyrelease.viewmodel
 
-import android.annotation.SuppressLint
-import android.content.Context
+import android.app.Application
 import android.net.Uri
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import pl.parfen.blockappstudyrelease.data.database.AppDatabase
-import pl.parfen.blockappstudyrelease.data.preferences.ProfilePreferences
+import java.util.Locale
 
+class CreateProfileViewModel(application: Application) : AndroidViewModel(application) {
 
-class CreateProfileViewModel(
-    @SuppressLint("StaticFieldLeak") private val context: Context
-) : ViewModel() {
-
-    private val db = AppDatabase.getDatabase(context)
     private val _uiState = MutableStateFlow(CreateProfileUiState())
     val uiState: StateFlow<CreateProfileUiState> = _uiState
 
-    private lateinit var prefs: ProfilePreferences
-    private var profileId: Int = -1
+    private val db = AppDatabase.getDatabase(application)
 
-    fun initProfile(id: Int) {
-        profileId = id
-        prefs = ProfilePreferences(context, profileId)
-        loadProfile()
-        loadPreferences()
-    }
+    var currentProfileId: Int = -1
+        private set
 
-    private fun loadProfile() {
+    fun initProfile(profileId: Int, languageFromBaseActivity: String) {
+        currentProfileId = profileId
         if (profileId != -1) {
-            viewModelScope.launch(Dispatchers.IO) {
-                val profile = db.profileDao().getProfileById(profileId)
-                val bookProgress = db.bookProgressDao().getProgressForProfile(profileId)
-                withContext(Dispatchers.Main) {
-                    profile?.let {
-                        _uiState.value = _uiState.value.copy(
-                            avatarUri = it.avatar?.let(Uri::parse),
-                            nickname = it.nickname,
-                            age = it.age.toString(),
-                            password = it.password.orEmpty(),
-                            selectedResource = it.selectedResource,
-                            usageTime = it.usageTime.toString(),
-                            percentage = it.percentage.toString(),
-                            blockedApps = it.blockedApps,
-                            books = it.books,
-                            activeBook = it.activeBook,
-                            aiNetwork = it.aiNetwork,
-                            aiTopics = it.aiTopics,
-                            aiLanguage = it.aiLanguage,
-                            showAllBooks = it.showAllBooks,
-                            additionalLanguage = it.additionalLanguage,
-                            selectedTopics = it.selectedTopics,
-                            totalWordsRead = it.totalWordsRead,
-                            profileLanguage = it.profileLanguage ?: HelpMethods.getSystemLanguage(),
-                            bookProgress = bookProgress
+            viewModelScope.launch {
+                db.profileDao().getProfileById(profileId)?.let { profile ->
+                    _uiState.update {
+                        it.copy(
+                            avatarUri = Uri.parse(profile.avatar),
+                            nickname = profile.nickname,
+                            age = profile.age.toString(),
+                            password = profile.password ?: "",
+                            selectedResource = profile.selectedResource,
+                            usageTime = profile.usageTime.toString(),
+                            percentage = profile.percentage.toString(),
+                            blockedApps = profile.blockedApps,
+                            books = profile.books,
+                            activeBook = profile.activeBook,
+                            aiNetwork = profile.aiNetwork,
+                            aiTopics = profile.aiTopics,
+                            aiLanguage = profile.aiLanguage,
+                            showAllBooks = profile.showAllBooks,
+                            additionalLanguage = profile.additionalLanguage,
+                            profileLanguage = profile.profileLanguage,
+                            selectedTopics = profile.selectedTopics,
+                            totalWordsRead = profile.totalWordsRead
                         )
                     }
                 }
             }
+        } else {
+            _uiState.update {
+                it.copy(profileLanguage = languageFromBaseActivity)
+            }
         }
     }
-    val currentProfileId: Int
-        get() = profileId
-    private fun loadPreferences() {
-        _uiState.value = _uiState.value.copy(
-            aiNetwork = prefs.aiNetwork,
-            aiTopics = prefs.aiTopics,
-            aiLanguage = prefs.aiLanguage,
-            additionalLanguage = prefs.additionalLanguage,
-            selectedTopics = prefs.selectedTopics
-        )
+
+
+
+    fun updateAvatar(uri: Uri?) {
+        _uiState.update { it.copy(avatarUri = uri) }
     }
 
     fun updateNickname(nickname: String) {
-        _uiState.value = _uiState.value.copy(nickname = nickname)
+        _uiState.update { it.copy(nickname = nickname) }
     }
 
     fun updateAge(age: String) {
-        _uiState.value = _uiState.value.copy(age = age)
+        _uiState.update { it.copy(age = age) }
     }
 
-    fun updateAvatar(uri: Uri?) {
-        _uiState.value = _uiState.value.copy(avatarUri = uri)
+    fun updatePassword(password: String) {
+        _uiState.update { it.copy(password = password) }
     }
 
     fun updateSelectedResource(resource: String) {
-        _uiState.value = _uiState.value.copy(selectedResource = resource)
+        _uiState.update { it.copy(selectedResource = resource) }
     }
 
-    fun updateUsageTime(usageTime: String) {
-        val validated = usageTime.toIntOrNull()?.coerceIn(1, 120)?.toString() ?: "1"
-        _uiState.value = _uiState.value.copy(usageTime = validated)
+    fun updateUsageTime(time: String) {
+        _uiState.update { it.copy(usageTime = time) }
     }
 
     fun updatePercentage(percentage: String) {
-        val validated = percentage.toIntOrNull()?.coerceIn(40, 100)?.toString() ?: "40"
-        _uiState.value = _uiState.value.copy(percentage = validated)
+        _uiState.update { it.copy(percentage = percentage) }
     }
 
     fun updateBlockedApps(apps: List<String>) {
-        _uiState.value = _uiState.value.copy(blockedApps = apps)
+        _uiState.update { it.copy(blockedApps = apps) }
     }
 
     fun updateBooksAndActiveBook(books: List<String>, activeBook: String) {
-        _uiState.value = _uiState.value.copy(books = books, activeBook = activeBook)
+        _uiState.update { it.copy(books = books, activeBook = activeBook) }
     }
 
-    fun updateAI(aiNetwork: String, aiTopics: List<String>) {
-        _uiState.value = _uiState.value.copy(aiNetwork = aiNetwork, aiTopics = aiTopics)
+    fun updateAiNetwork(network: String) {
+        _uiState.update { it.copy(aiNetwork = network) }
+    }
+
+    fun updateAiTopics(topics: List<String>) {
+        _uiState.update { it.copy(aiTopics = topics) }
+    }
+
+    fun updateAI(network: String, topics: List<String>) {
+        _uiState.update { it.copy(aiNetwork = network, aiTopics = topics) }
+    }
+
+    fun updateAiLanguage(language: String) {
+        _uiState.update { it.copy(aiLanguage = language) }
+    }
+
+    fun updateProfileLanguage(language: String) {
+        _uiState.update { it.copy(profileLanguage = language) }
+    }
+
+    fun updateShowAllBooks(show: Boolean) {
+        _uiState.update { it.copy(showAllBooks = show) }
+    }
+
+    fun updateAdditionalLanguage(language: String?) {
+        _uiState.update { it.copy(additionalLanguage = language) }
+    }
+
+    fun updateSelectedTopics(topics: List<String>) {
+        _uiState.update { it.copy(selectedTopics = topics) }
+    }
+
+    fun updateTotalWordsRead(words: Int) {
+        _uiState.update { it.copy(totalWordsRead = words) }
+    }
+
+    fun saveProfile(onSuccess: () -> Unit = {}, onError: (String) -> Unit = {}) {
+        viewModelScope.launch {
+            try {
+                val currentUiState = _uiState.value
+                val finalProfileLanguage = if (currentUiState.profileLanguage.isBlank()) {
+                    Locale.getDefault().language.ifBlank { "pl" }
+                } else {
+                    currentUiState.profileLanguage
+                }
+
+                val profileToSave = currentUiState.toProfile(currentProfileId).copy(
+                    profileLanguage = finalProfileLanguage
+                )
+
+                db.profileDao().insert(profileToSave)
+                onSuccess()
+            } catch (e: Exception) {
+                onError(e.message ?: "Ошибка сохранения профиля")
+            }
+        }
+    }
+
+    fun validateAge(): Boolean {
+        val isValid = _uiState.value.isAgeValid()
+        _uiState.update { it.copy(showAgeValidationAlert = !isValid) }
+        return isValid
     }
 
     fun showAgeValidationAlert() {
-        _uiState.value = _uiState.value.copy(showAgeValidationAlert = true)
+        _uiState.update { it.copy(showAgeValidationAlert = true) }
     }
 
     fun dismissAgeValidationAlert() {
-        _uiState.value = _uiState.value.copy(showAgeValidationAlert = false)
-    }
-
-    fun saveProfile(onSuccess: () -> Unit, onError: (String) -> Unit) {
-        val currentState = _uiState.value
-
-        if (currentState.age.isBlank()) {
-            onError("Введите возраст")
-            return
-        }
-
-        if (!currentState.isAgeValid()) {
-            onError("Возраст должен быть от 6 до 15 лет")
-            return
-        }
-
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val profile = currentState.toProfile(profileId)
-                val profileDao = db.profileDao()
-
-                if (profileId == -1) {
-                    profileDao.insert(profile)
-                } else {
-                    profileDao.update(profile)
-                }
-
-                prefs.clear()
-
-                withContext(Dispatchers.Main) {
-                    onSuccess()
-                }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    onError(e.message ?: "Ошибка сохранения профиля")
-                }
-            }
-        }
+        _uiState.update { it.copy(showAgeValidationAlert = false) }
     }
 }

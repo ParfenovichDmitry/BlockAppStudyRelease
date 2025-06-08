@@ -82,8 +82,12 @@ class BookViewModel(
                 }
             }
 
-            val effectiveSelectedBook = allBooks.find { it.title == selectedBook }?.title
-                ?: allBooks.minByOrNull { it.id }?.title.orEmpty()
+            // Исправлено: правильное определение активной книги!
+            val effectiveSelectedBook = if (selectedBook.isNotEmpty() && allBooks.any { it.title == selectedBook }) {
+                selectedBook
+            } else {
+                allBooks.minByOrNull { it.id }?.title.orEmpty()
+            }
 
             _uiState.update {
                 it.copy(
@@ -134,7 +138,10 @@ class BookViewModel(
                     it.copy(
                         isLoading = false,
                         books = allBooks,
-                        selectedBookTitle = it.selectedBookTitle.ifEmpty { defaultBook?.title.orEmpty() }
+                        selectedBookTitle = if (it.selectedBookTitle.isNotEmpty() && allBooks.any { b -> b.title == it.selectedBookTitle })
+                            it.selectedBookTitle
+                        else
+                            defaultBook?.title.orEmpty()
                     )
                 }
             } catch (_: Exception) {
@@ -191,10 +198,10 @@ class BookViewModel(
     }
 
     fun selectBook(bookTitle: String) {
+        // ВСЕГДА сохраняем и в uiState, и в prefs, и в savedStateHandle
+        _uiState.update { it.copy(selectedBookTitle = bookTitle) }
         prefs.edit { putString(KEY_ACTIVE_BOOK, bookTitle) }
         savedStateHandle["activeBook"] = bookTitle
-        val scrollPosition = getScrollPosition(bookTitle)
-        _uiState.update { it.copy(selectedBookTitle = bookTitle, scrollPosition = scrollPosition) }
     }
 
     fun updateShowAllBooks(value: Boolean) {
@@ -223,12 +230,31 @@ class BookViewModel(
 
     fun saveChanges(profileId: Int, showAllBooks: Boolean, secondaryLanguage: String?, onSaveComplete: (Boolean, String?) -> Unit) {
         viewModelScope.launch {
-            selectBook(_uiState.value.selectedBookTitle)
-            updateShowAllBooks(showAllBooks)
-            updateSelectedAdditionalLanguage(secondaryLanguage)
+            val selectedBook = _uiState.value.selectedBookTitle
+
+            // ОБЯЗАТЕЛЬНО сохраняем выбранную книгу ПЕРЕД обновлением профиля!
+            selectBook(selectedBook)
+
+            prefs.edit {
+                putBoolean(KEY_SHOW_ALL_BOOKS, showAllBooks)
+                putString(KEY_SECONDARY_LANGUAGE, secondaryLanguage)
+                putString(KEY_ACTIVE_BOOK, selectedBook)
+            }
+
+            savedStateHandle["showAllBooks"] = showAllBooks
+            savedStateHandle["secondaryLanguage"] = secondaryLanguage
+            savedStateHandle["activeBook"] = selectedBook
+
+            _uiState.update {
+                it.copy(
+                    showAllBooks = showAllBooks,
+                    secondaryLanguage = secondaryLanguage,
+                    selectedBookTitle = selectedBook
+                )
+            }
 
             if (profileId != -1) {
-                saveUiSettings(context, profileId, showAllBooks, secondaryLanguage)
+                saveUiSettings(context, profileId, showAllBooks, secondaryLanguage, selectedBook)
                 cancelChanges()
             }
 
@@ -252,7 +278,7 @@ class BookViewModel(
         }
     }
 
-    private fun saveUiSettings(context: Context, profileId: Int, showAllBooks: Boolean, secondaryLanguage: String?) {
+    private fun saveUiSettings(context: Context, profileId: Int, showAllBooks: Boolean, secondaryLanguage: String?, selectedBook: String) {
         viewModelScope.launch {
             try {
                 val profileDao = AppDatabase.getDatabase(context).profileDao()
@@ -262,7 +288,7 @@ class BookViewModel(
                         it.copy(
                             showAllBooks = showAllBooks,
                             additionalLanguage = secondaryLanguage,
-                            activeBook = _uiState.value.selectedBookTitle
+                            activeBook = selectedBook // <-- сохраняем выбранную книгу!
                         )
                     )
                 }

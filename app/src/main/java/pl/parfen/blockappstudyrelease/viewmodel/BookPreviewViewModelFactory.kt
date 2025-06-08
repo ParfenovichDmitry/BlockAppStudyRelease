@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import pl.parfen.blockappstudyrelease.domain.LoadBookLinesUseCase
 import pl.parfen.blockappstudyrelease.domain.SaveProgressUseCase
-import pl.parfen.blockappstudyrelease.domain.usecase.GetNextBookUseCase
+import pl.parfen.blockappstudyrelease.domain.GetNextBookUseCase
 
 
 class BookPreviewViewModelFactory(

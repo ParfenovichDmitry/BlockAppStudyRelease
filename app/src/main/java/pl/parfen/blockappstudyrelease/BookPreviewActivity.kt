@@ -1,12 +1,9 @@
 package pl.parfen.blockappstudyrelease
 
-import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.core.os.BuildCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.initializer
@@ -15,7 +12,7 @@ import pl.parfen.blockappstudyrelease.data.model.Book
 import pl.parfen.blockappstudyrelease.data.repository.BookRepositoryImpl
 import pl.parfen.blockappstudyrelease.domain.LoadBookLinesUseCase
 import pl.parfen.blockappstudyrelease.domain.SaveProgressUseCase
-import pl.parfen.blockappstudyrelease.domain.usecase.GetNextBookUseCase
+import pl.parfen.blockappstudyrelease.domain.GetNextBookUseCase
 import pl.parfen.blockappstudyrelease.ui.preview.BookPreviewScreen
 import pl.parfen.blockappstudyrelease.viewmodel.BookPreviewViewModel
 import pl.parfen.blockappstudyrelease.viewmodel.BookPreviewViewModelFactory

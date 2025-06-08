@@ -6,20 +6,15 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import pl.parfen.blockappstudyrelease.data.model.ai.ChatGPTManager
 import pl.parfen.blockappstudyrelease.ui.ai.components.elements.*
 import pl.parfen.blockappstudyrelease.ui.theme.GreenLight
@@ -27,8 +22,6 @@ import pl.parfen.blockappstudyrelease.ui.theme.GreenMedium
 import pl.parfen.blockappstudyrelease.util.HelpMethods.calculateOneMonthLater
 import pl.parfen.blockappstudyrelease.util.HelpMethods.createPrompt
 import pl.parfen.blockappstudyrelease.util.HelpMethods.mapTopicToEnglish
-
-
 
 @Composable
 fun AIStateHandler(
@@ -67,11 +60,8 @@ fun AIStateHandler(
     val chatGPTManager = remember { ChatGPTManager(Handler(Looper.getMainLooper())) }
     val lazyListState = rememberLazyListState()
 
-
     val topics = remember(aiTopics) { aiTopics.map { Topic(it, mapTopicToEnglish(context, it, languageCodes)) } }
-
     var selectedTopicsState by remember { mutableStateOf(selectedTopics) }
-
 
     LaunchedEffect(
         selectedLanguageIndex,
@@ -101,7 +91,7 @@ fun AIStateHandler(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(brush = androidx.compose.ui.graphics.Brush.verticalGradient(listOf(GreenLight, GreenMedium)))
+            .background(brush = Brush.verticalGradient(listOf(GreenLight, GreenMedium)))
             .padding(8.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
@@ -127,7 +117,6 @@ fun AIStateHandler(
                 onResetAttempts = { freeAttempts = 5 }
             )
 
-
             Box(
                 Modifier
                     .fillMaxWidth()
@@ -135,7 +124,6 @@ fun AIStateHandler(
             ) {
                 AIEditTopicsButton(onEditTopics)
             }
-
 
             AITopicSelector(
                 userTopics = topics,
@@ -174,7 +162,14 @@ fun AIStateHandler(
                     }
 
                     val selectedTopic = filteredTopics.randomOrNull()?.original ?: "Default"
-                    val prompt = createPrompt(context, age, selectedTopic, selectedLanguageCode, languageCodes, breakIntoSyllables)
+                    val prompt = createPrompt(
+                        context = context,
+                        age = age,
+                        topics = listOf(selectedTopic),
+                        languageCode = selectedLanguageCode,
+                        languageCodes = languageCodes,
+                        breakIntoSyllables = breakIntoSyllables
+                    )
 
                     chatGPTManager.getChatGPTResponse(prompt, "gpt-3.5-turbo", false) { result ->
                         aiResponse = result
@@ -201,6 +196,3 @@ fun AIStateHandler(
         )
     }
 }
-
-
-
